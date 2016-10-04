@@ -1,0 +1,3 @@
+[submodule "cmark"]
+	path = cmark
+	url = git@github.com:github/cmark.git

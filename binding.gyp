@@ -4,12 +4,16 @@
       'target_name': 'binding',
       'include_dirs': [
         '<!(node -e "require(\'nan\')")',
+        'src',
         'cmark/src',
         'cmark/extensions',
         'cmark/build/src'
       ],
       'sources': [
-        'binding.cc',
+        'src/markdown.cc',
+        'src/sync.cc',
+        'src/async.cc',
+        'src/binding.cc',
         'cmark/src/arena.c',
         'cmark/src/blocks.c',
         'cmark/src/buffer.c',

@@ -25,4 +25,5 @@ void render_html_sync(const FunctionCallbackInfo<Value>& args) {
   Utf8String markdown(args[0]);
   char* result = markdown_to_html(*markdown, markdown.length());
   args.GetReturnValue().Set(New<String>(result).ToLocalChecked());
+  free(result);
 }

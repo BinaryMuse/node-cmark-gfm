@@ -66,5 +66,6 @@ void after_render(uv_work_t* request, int status) {
 
   work->callback.Reset();
   delete work->markdown;
+  free(work->result);
   delete work;
 }

@@ -4,15 +4,28 @@
 #include "cmark.h"
 #include "markdown.h"
 
-int get_option(v8::Local<v8::Object> options_obj, const char* option_name, int option_value) {
-  Nan::MaybeLocal<v8::Value> val = Nan::Get(options_obj, Nan::New<v8::String>(option_name).ToLocalChecked());
-  if (val.IsEmpty()) return false;
+using v8::Local;
+using v8::Object;
+using v8::Value;
+using Nan::Equals;
+using Nan::Get;
+using Nan::MaybeLocal;
+using Nan::New;
+using Nan::True;
 
   v8::Local<v8::Value> bool_val = val.ToLocalChecked();
   return Nan::Equals(bool_val, Nan::True()).FromMaybe(false) ? option_value : 0;
 }
 
-int parse_options(v8::Local<v8::Object> options_obj) {
+int get_option(Local<Object> options_obj, const char* option_name, int option_value) {
+  MaybeLocal<Value> val = Get(options_obj, New(option_name).ToLocalChecked());
+  if (val.IsEmpty()) return 0;
+
+  Local<Value> bool_val = val.ToLocalChecked();
+  return Equals(bool_val, True()).FromMaybe(false) ? option_value : 0;
+}
+
+int parse_options(Local<Object> options_obj) {
   int result = CMARK_OPT_DEFAULT;
   result |= get_option(options_obj, "sourcepos", CMARK_OPT_SOURCEPOS);
   result |= get_option(options_obj, "safe", CMARK_OPT_SAFE);

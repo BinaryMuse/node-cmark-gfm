@@ -16,9 +16,10 @@ using v8::Local;
 using v8::String;
 using v8::Value;
 
-RenderWork::RenderWork(Utf8String* markdown, Callback* callback) {
+RenderWork::RenderWork(Utf8String* markdown, Callback* callback, const int options) {
   Local<Function> cb = callback->GetFunction();
   this->markdown = markdown;
+  this->options = options;
   this->callback.Reset(cb);
 };
 
@@ -50,7 +51,7 @@ void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
 
   Utf8String* markdown = new Utf8String(args[0]);
   Callback callback(args[2].As<Function>());
-  RenderWork* work = new RenderWork(markdown, &callback);
+  RenderWork* work = new RenderWork(markdown, &callback, options);
   work->request.data = work;
 
   uv_queue_work(uv_default_loop(), &work->request, do_render, after_render);
@@ -59,6 +60,7 @@ void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
 void do_render(uv_work_t* request) {
   RenderWork* work = static_cast<RenderWork*>(request->data);
   Utf8String* markdown = work->markdown;
+  int options = work->options;
   char* result = markdown_to_html(**markdown, markdown->length(), options);
   work->result = result;
 }

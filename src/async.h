@@ -7,10 +7,11 @@
 
 class RenderWork {
 public:
-  RenderWork(Nan::Utf8String* markdown, Nan::Callback* callback);
+  RenderWork(Nan::Utf8String* markdown, Nan::Callback* callback, const int options);
   uv_work_t request;
   Nan::Utf8String* markdown;
   Nan::Callback callback;
+  int options;
   char* result;
 };
 

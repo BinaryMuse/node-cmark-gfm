@@ -4,7 +4,7 @@ node_js:
   - 6
   - 5
   - 4
-after_success:
+before_install:
   - |
 
        $(npm bin)/set-up-ssh --key "$encrypted_45b137b9b756_key" \

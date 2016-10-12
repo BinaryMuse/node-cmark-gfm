@@ -2,6 +2,7 @@
 #include <nan.h>
 #include <uv.h>
 
+#include "cmark.h"
 #include "markdown.h"
 #include "async.h"
 
@@ -23,27 +24,32 @@ RenderWork::RenderWork(Utf8String* markdown, Callback* callback) {
 
 void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
   if (args.Length() < 1) {
-    ThrowTypeError("Missing argument 'markdown' at position 0");
+    ThrowTypeError("Missing argument 'markdown'");
     return;
   }
 
   if (!args[0]->IsString()) {
-    ThrowTypeError("Expected argument 'markdown' at position 0 to be a string");
+    ThrowTypeError("Expected argument 'markdown' to be a string");
     return;
   }
 
-  if (args.Length() < 2) {
-    ThrowTypeError("Missing argument 'callback' at position 1");
+  if (args.Length() < 3) {
+    ThrowTypeError("Missing argument 'callback'");
     return;
   }
 
-  if(!args[1]->IsFunction()) {
-    ThrowTypeError("Expected argument 'callback' at position 1 to be a function");
+  if(!args[2]->IsFunction()) {
+    ThrowTypeError("Expected argument 'callback' to be a function");
     return;
+  }
+
+  int options = CMARK_OPT_DEFAULT;
+  if (args[1]->IsObject()) {
+    options = parse_options(args[1]->ToObject());
   }
 
   Utf8String* markdown = new Utf8String(args[0]);
-  Callback callback(args[1].As<Function>());
+  Callback callback(args[2].As<Function>());
   RenderWork* work = new RenderWork(markdown, &callback);
   work->request.data = work;
 
@@ -53,7 +59,7 @@ void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
 void do_render(uv_work_t* request) {
   RenderWork* work = static_cast<RenderWork*>(request->data);
   Utf8String* markdown = work->markdown;
-  char* result = markdown_to_html(**markdown, markdown->length());
+  char* result = markdown_to_html(**markdown, markdown->length(), options);
   work->result = result;
 }
 

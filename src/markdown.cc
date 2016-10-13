@@ -19,6 +19,7 @@ using Nan::Equals;
 using Nan::Get;
 using Nan::MaybeLocal;
 using Nan::New;
+using Nan::ThrowTypeError;
 using Nan::True;
 
 void node_cmark_init() {
@@ -32,7 +33,21 @@ void populate_extension_names(Local<Object> options_obj, vector<string>* extensi
 
   Local<Array> exts = Local<Array>::Cast(val.ToLocalChecked());
   for(uint32_t i = 0; i < exts->Length(); i++) {
-    Nan::Utf8String ext(exts->Get(i));
+    Local<Value> ext_name = exts->Get(i);
+    if (!ext_name->IsString()) {
+      string bad_ext_name(*Nan::Utf8String(ext_name->ToString()));
+      string err_msg = "'" + bad_ext_name + "' is not a valid extension name.";
+      ThrowTypeError(err_msg.c_str());
+      return;
+    }
+    Nan::Utf8String ext(ext_name);
+    cmark_syntax_extension* stx_ext = cmark_find_syntax_extension(*ext);
+    if (stx_ext == NULL) {
+      string bad_ext_name(*ext);
+      string err_msg = "'" + bad_ext_name + "' is not a valid extension name.";
+      ThrowTypeError(err_msg.c_str());
+      return;
+    }
     extension_names->push_back(*ext);
   }
 }
@@ -62,8 +77,11 @@ cmark_parser* prepare_parser(const int options, vector<string>* extension_names)
   cmark_parser* parser = cmark_parser_new(options);
 
   for(vector<string>::size_type i = 0; i < extension_names->size(); i++) {
-    cmark_syntax_extension* ext = cmark_find_syntax_extension(extension_names->at(i).c_str());
-    cmark_parser_attach_syntax_extension(parser, ext);
+    string ext_name = extension_names->at(i);
+    cmark_syntax_extension* ext = cmark_find_syntax_extension(ext_name.c_str());
+    if (ext != NULL) {
+      cmark_parser_attach_syntax_extension(parser, ext);
+    }
   }
 
   return parser;

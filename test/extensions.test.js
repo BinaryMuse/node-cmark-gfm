@@ -74,4 +74,16 @@ describe('extensions', () => {
       assert.htmlEqual(rendered, html)
     })
   })
+
+  it("doesn't crash for bad extensions", () => {
+    assert.throws(function() {
+      cmark.renderHtml('# Hi', {extensions: ['fake']})
+    })
+    assert.throws(function() {
+      cmark.renderHtml('# Hi', {extensions: 'notanarray'})
+    })
+    assert.throws(function() {
+      cmark.renderHtml('# Hi', {extensions: [{}]})
+    })
+  })
 })

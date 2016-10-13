@@ -4,7 +4,9 @@
 #include <v8.h>
 #include <nan.h>
 
+void node_cmark_init(void);
 int parse_options(v8::Local<v8::Object> options_obj);
-char* markdown_to_html(const char* markdown, const int len, const int options);
+void populate_extension_names(v8::Local<v8::Object> options_obj, std::vector<std::string>* extension_names);
+char* markdown_to_html(const char* markdown, const int len, const int options, std::vector<std::string>* extension_names);
 
 #endif

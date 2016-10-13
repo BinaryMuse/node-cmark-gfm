@@ -7,11 +7,12 @@
 
 class RenderWork {
 public:
-  RenderWork(Nan::Utf8String* markdown, Nan::Callback* callback, const int options);
+  RenderWork(Nan::Utf8String* markdown, Nan::Callback* callback, const int options, std::vector<std::string>* extension_names);
   uv_work_t request;
   Nan::Utf8String* markdown;
   Nan::Callback callback;
   int options;
+  std::vector<std::string>* extension_names;
   char* result;
 };
 

@@ -6,6 +6,8 @@
 #include "markdown.h"
 #include "async.h"
 
+using std::vector;
+using std::string;
 using Nan::Callback;
 using Nan::FunctionCallbackInfo;
 using Nan::New;
@@ -13,17 +15,19 @@ using Nan::ThrowTypeError;
 using Nan::Utf8String;
 using v8::Function;
 using v8::Local;
+using v8::Object;
 using v8::String;
 using v8::Value;
 
-RenderWork::RenderWork(Utf8String* markdown, Callback* callback, const int options) {
+RenderWork::RenderWork(Utf8String* markdown, Callback* callback, const int options, vector<string>* extension_names) {
   Local<Function> cb = callback->GetFunction();
   this->markdown = markdown;
-  this->options = options;
   this->callback.Reset(cb);
+  this->extension_names = extension_names;
+  this->options = options;
 };
 
-void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
+void render_html_async(const FunctionCallbackInfo<Value>& args) {
   if (args.Length() < 1) {
     ThrowTypeError("Missing argument 'markdown'");
     return;
@@ -39,19 +43,24 @@ void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
     return;
   }
 
+  if (!args[1]->IsObject()) {
+    ThrowTypeError("Expected argument 'options' to be an object");
+    return;
+  }
+
   if(!args[2]->IsFunction()) {
     ThrowTypeError("Expected argument 'callback' to be a function");
     return;
   }
 
-  int options = CMARK_OPT_DEFAULT;
-  if (args[1]->IsObject()) {
-    options = parse_options(args[1]->ToObject());
-  }
-
-  Utf8String* markdown = new Utf8String(args[0]);
+  vector<string>* extension_names = new vector<string>;
+  Local<Object> opts_obj = args[1]->ToObject();
+  int options = parse_options(opts_obj);
+  populate_extension_names(opts_obj, extension_names);
   Callback callback(args[2].As<Function>());
-  RenderWork* work = new RenderWork(markdown, &callback, options);
+  Utf8String* markdown = new Utf8String(args[0]);
+
+  RenderWork* work = new RenderWork(markdown, &callback, options, extension_names);
   work->request.data = work;
 
   uv_queue_work(uv_default_loop(), &work->request, do_render, after_render);
@@ -60,8 +69,8 @@ void render_html_async(const Nan::FunctionCallbackInfo<Value>& args) {
 void do_render(uv_work_t* request) {
   RenderWork* work = static_cast<RenderWork*>(request->data);
   Utf8String* markdown = work->markdown;
-  int options = work->options;
-  char* result = markdown_to_html(**markdown, markdown->length(), options);
+  vector<string>* extension_names = work->extension_names;
+  char* result = markdown_to_html(**markdown, markdown->length(), work->options, extension_names);
   work->result = result;
 }
 
@@ -74,6 +83,8 @@ void after_render(uv_work_t* request, int status) {
 
   work->callback.Reset();
   delete work->markdown;
-  free(work->result);
+  delete work->extension_names;
+  cmark_mem* default_mem = cmark_get_default_mem_allocator();
+  default_mem->free(work->result);
   delete work;
 }

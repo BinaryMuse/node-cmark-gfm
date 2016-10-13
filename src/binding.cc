@@ -14,6 +14,8 @@ using v8::Local;
 using v8::Object;
 
 void init(Local<Object> exports) {
+  node_cmark_init();
+
   exports->Set(New("renderHtmlSync").ToLocalChecked(), New<Function>(render_html_sync));
   exports->Set(New("renderHtml").ToLocalChecked(), New<Function>(render_html_async));
   exports->Set(New("cmark_version").ToLocalChecked(), New(cmark_version_string()).ToLocalChecked());

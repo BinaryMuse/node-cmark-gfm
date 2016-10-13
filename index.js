@@ -1,5 +1,3 @@
-module.exports = require('bindings')('binding.node')
-
 var bindings = require('bindings')('binding.node')
 module.exports = {
   renderHtmlSync: function (markdown, options) {

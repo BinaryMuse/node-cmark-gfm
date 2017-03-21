@@ -9,7 +9,7 @@ node-cmark is a Node.js wrapper around [cmark](https://github.com/jgm/cmark), th
   * `markdown` - a string containing Markdown to render to HTML
   * `options` - a hash of options (see *Options*, below)
 
-**`renderHtmlSync(markdown[, options], callback)`**
+**`renderHtml(markdown[, options], callback)`**
 
   * `markdown` - a string containing Markdown to render to HTML
   * `options` - a hash of options (see *Options*, below)

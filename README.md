@@ -1,6 +1,6 @@
 # node-cmark
 
-node-cmark is a Node.js wrapper around [cmark](https://github.com/jgm/cmark), the reference implementation of [CommonMark](http://commonmark.org/) in C by John MacFarlane.
+node-cmark is a Node.js wrapper around GitHub's fork of [cmark](https://github.com/github/cmark), the reference implementation of [CommonMark](http://commonmark.org/) in C by John MacFarlane. You can find GitHub's fork at https://github.com/github/cmark.
 
 ## Usage
 

@@ -12,8 +12,6 @@ env:
 node_js:
   - node
   - 6
-  - 5
-  - 4
 
 install:
   - cd cmark && make && cd ..

@@ -11,5 +11,5 @@ node_js:
   - 4
 
 install:
-  - cd cmark && make
+  - cd cmark && CFLAGS="-std=c99" make
   - npm install

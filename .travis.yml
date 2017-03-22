@@ -6,6 +6,6 @@ node_js:
   - 5
   - 4
 
-script:
+install:
   - cd cmark && make
-  - $(npm bin) test
+  - npm install

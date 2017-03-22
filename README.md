@@ -30,7 +30,7 @@ You can control the behavior of node-cmark by passing options to the rendering f
   * `extensions` - an array of extensions to enable. Valid extensions are:
     * `"table"` - render tables
     * `"strikethrough"` - strikethrough
-    * `"whitelist"` - whitelist something
+    * `"taglist"` - whitelist something
     * `"autolink"` - automatically turn URLs into links
 
 ### Rendering to HTML

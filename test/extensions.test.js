@@ -45,7 +45,7 @@ describe('extensions', () => {
     })
   })
 
-  describe('whitelist', () => {
+  describe('tagfilter', () => {
     it('only allows certain HTML tags to be rendered as raw HTML', () => {
       const markdown = dedent`
       <div>What a weird <xmp> tag</div>
@@ -55,7 +55,7 @@ describe('extensions', () => {
       <div>What a weird &lt;xmp> tag</div>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['whitelist']})
+      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['tagfilter']})
       assert.htmlEqual(rendered, html)
     })
   })

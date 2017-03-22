@@ -7,6 +7,7 @@
         'src',
         'cmark/src',
         'cmark/extensions',
+        'cmark/build/extensions',
         'cmark/build/src'
       ],
       'sources': [
@@ -44,7 +45,7 @@
         'cmark/extensions/ext_scanners.c',
         'cmark/extensions/strikethrough.c',
         'cmark/extensions/table.c',
-        'cmark/extensions/whitelist.c'
+        'cmark/extensions/tagfilter.c'
       ]
     }
   ]

@@ -1,15 +1,21 @@
+os:
+  - linux
+  - osx
+dist: trusty
+sudo: false
+
 language: node_js
+
+env:
+- CFLAGS="-std=c99"
+
 node_js:
   - node
   - 6
-  - 5
-  - 4
-before_install:
-  - |
 
-       $(npm bin)/set-up-ssh --key "$encrypted_45b137b9b756_key" \
-                             --iv "$encrypted_45b137b9b756_iv" \
-                             --path-encrypted-key ".travis/github_deploy_key.enc"
-env:
-  global:
-    secure: "fQeTo9/jCWYtV6omXSroeoEPfRJkdFIXGEG9+PXqsrDk2tz3hL/gtbDo+9zHB/9EY54sH61vhO+EA3NYq1wWxW1rZiV1WuQjx/+0qsGZ+TnhnzmBzpxcGGZVtN07kyVzqT5iGdikoi3rfs1r5MJKPgZh7X717A6kd8Zivz0O2oM85obD/WAZ2qFiCoqRqUE4Ruj+TNi3tK+YqwnPlmxOFhqziRsoV2UIa+xJygtowiko4K/3XpGT903TPWYhErNuteRYHYLmIelDoOsAsmcXVKODbz+7p7KN1uyrJix+EUBqaTjOKupAg5Gle5jBK/oE68/6fphvRluSkvo2rGqoLk6bN1TwWYIb6bWyMyMjGeaboJ17RsknXqlT6a/jghWWdWZpJ79kA7cvREoDsWtZVs7yp6bcbZqVVGg2ANh/Rkaxoo6u5SfB0B4zDn6gnm4AMNkUDDHC+k7Q6v8BmcPnAdtz24cHQNBCs/pyjTk70XE0HSsiO8iPdZ2FLLXtUfFc75TWkSVmjUXNpPotA7h7+ICfuSEKXPIeu7QmeokAyewLKwXM0++PsGJsX1O1ZNrkQmza5IucmpN4fgqbHs/rhdm1h7dmPuv/5mYUWiAdJBHhAZu/JjJV2TP37V29Tkjwk7HP+CQKwFC/Gi/RzV1DrTtixt6mzvb2Qi9tXDIMOlA="
+install:
+  - cd cmark && make && cd ..
+  - npm install
+
+script:
+  - npm test

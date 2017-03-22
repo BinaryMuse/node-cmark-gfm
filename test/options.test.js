@@ -72,9 +72,9 @@ describe('options', () => {
       def
       `.trim()
 
-      const html = `
-      <p>abc<br>def</p>
-      `
+      const html = dedent`
+      <p>abc<br>\ndef</p>
+      `.trim()
 
       const rendered = cmark.renderHtmlSync(markdown, {hardbreaks: true})
       assert.htmlEqual(rendered, html)

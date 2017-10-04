@@ -2,6 +2,12 @@
 
 node-cmark is a Node.js wrapper around GitHub's fork of [cmark](https://github.com/github/cmark), the reference implementation of [CommonMark](http://commonmark.org/) in C by John MacFarlane. You can find GitHub's fork at https://github.com/github/cmark.
 
+## Installation
+
+```
+npm install @binarymuse/cmark
+```
+
 ## Usage
 
 **`html = renderHtmlSync(markdown[, options])`**

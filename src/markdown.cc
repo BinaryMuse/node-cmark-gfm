@@ -23,7 +23,7 @@ using Nan::ThrowTypeError;
 using Nan::True;
 
 void node_cmark_init() {
-  cmark_register_plugin(core_extensions_registration);
+  core_extensions_ensure_registered();
 }
 
 void populate_extension_names(Local<Object> options_obj, vector<string>* extension_names) {

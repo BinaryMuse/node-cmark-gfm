@@ -4,6 +4,7 @@
   "description": "Node bindings to the cmark Markdown parser",
   "main": "index.js",
   "scripts": {
+    "preinstall": "cmake-js compile -d cmark",
     "test": "mocha test/helper.js test/*.test.js"
   },
   "keywords": [
@@ -15,6 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "bindings": "^1.2.1",
+    "cmake-js": "^3.5.0",
     "nan": "^2.4.0"
   },
   "devDependencies": {

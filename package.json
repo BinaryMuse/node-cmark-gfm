@@ -1,10 +1,11 @@
 {
-  "name": "node-cmark",
+  "name": "cmark",
   "version": "0.0.1",
   "description": "Node bindings to the cmark Markdown parser",
   "main": "index.js",
   "scripts": {
     "preinstall": "cmake-js compile -d cmark",
+    "build": "node-gyp rebuild",
     "test": "mocha test/helper.js test/*.test.js"
   },
   "keywords": [
@@ -24,6 +25,7 @@
     "chai": "^3.5.0",
     "chai-html": "^1.1.0",
     "dedent": "^0.6.0",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "node-gyp": "^3.6.2"
   }
 }

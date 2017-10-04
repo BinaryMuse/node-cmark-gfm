@@ -1,4 +1,7 @@
 {
+  'variables': {
+    'cmake': '!(node_modules/.bin/cmake-js compile -d cmark)'
+  },
   'targets': [
     {
       'target_name': 'binding',

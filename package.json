@@ -4,7 +4,6 @@
   "description": "Node bindings to the cmark Markdown parser",
   "main": "index.js",
   "scripts": {
-    "preinstall": "cmake-js compile -d cmark",
     "build": "node-gyp rebuild",
     "test": "mocha test/helper.js test/*.test.js"
   },

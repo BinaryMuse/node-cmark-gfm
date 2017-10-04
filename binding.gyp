@@ -1,10 +1,20 @@
 {
-  'variables': {
-    'cmake': '!(node_modules/.bin/cmake-js compile -d cmark)'
-  },
   'targets': [
     {
+      'target_name': 'build_cmark',
+      'type': 'none',
+      'actions': [
+        {
+          'action_name': 'build_cmark',
+          'inputs': [],
+          'outputs': ['cmark/build'],
+          'action': ['node', 'node_modules/.bin/cmake-js', '-d', 'cmark', 'compile']
+        }
+      ]
+    },
+    {
       'target_name': 'binding',
+      'dependencies': [ 'build_cmark' ],
       'include_dirs': [
         '<!(node -e "require(\'nan\')")',
         'src',

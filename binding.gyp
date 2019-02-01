@@ -65,7 +65,13 @@
         'cmark/extensions/strikethrough.c',
         'cmark/extensions/table.c',
         'cmark/extensions/tagfilter.c'
-      ]
+      ],
+      'xcode_settings': {
+        'MACOSX_DEPLOYMENT_TARGET': '10.8',
+        'CLANG_CXX_LIBRARY': 'libc++',
+        'CLANG_CXX_LANGUAGE_STANDARD': 'c++11',
+        'GCC_VERSION': 'com.apple.compilers.llvm.clang.1_0'
+      }
     }
   ]
 }

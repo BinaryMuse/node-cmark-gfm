@@ -1,6 +1,6 @@
 {
   "name": "@binarymuse/cmark",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Node bindings to the cmark Markdown parser",
   "main": "index.js",
   "scripts": {

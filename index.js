@@ -9,5 +9,8 @@ module.exports = {
       options = {}
     }
     return bindings.renderHtml(markdown, options, callback)
+  },
+  version: function () {
+    return bindings.cmark_version
   }
 }

@@ -10,7 +10,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
 
   exports.Set(Napi::String::New(env, "renderHtmlSync"), Napi::Function::New(env, render_html_sync));
   exports.Set(Napi::String::New(env, "renderHtml"), Napi::Function::New(env, render_html_async));
-  exports.Set(Napi::String::New(env, "smark_version"), Napi::String::New(env, cmark_version_string()));
+  exports.Set(Napi::String::New(env, "cmark_version"), Napi::String::New(env, cmark_version_string()));
 
   return exports;
 }

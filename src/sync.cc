@@ -1,5 +1,4 @@
-#include <v8.h>
-#include <nan.h>
+#include "napi.h"
 
 #include "cmark.h"
 #include "markdown.h"
@@ -7,37 +6,30 @@
 
 using std::string;
 using std::vector;
-using Nan::FunctionCallbackInfo;
-using Nan::New;
-using Nan::ThrowTypeError;
-using Nan::Utf8String;
-using v8::Local;
-using v8::Object;
-using v8::String;
-using v8::Value;
 
-void render_html_sync(const FunctionCallbackInfo<Value>& args) {
+Napi::Value render_html_sync(const Napi::CallbackInfo& args) {
   if (args.Length() < 1) {
-    ThrowTypeError("Missing argument 'markdown'");
-    return;
+    Napi::Error::New(args.Env(), "Missing argument 'markdown'").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
   }
 
-  if (!args[0]->IsString()) {
-    ThrowTypeError("Expected argument 'markdown' to be a string");
-    return;
+  if (!args[0].IsString()) {
+    Napi::Error::New(args.Env(), "Expected argument 'markdown' to be a string").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
   }
 
   int options = CMARK_OPT_DEFAULT;
   vector<string>* extension_names = new vector<string>;
-  if (args.Length() >= 2 && args[1]->IsObject()) {
-    Local<Object> opts_obj = args[1]->ToObject();
+  if (args.Length() >= 2 && args[1].IsObject()) {
+    Napi::Object opts_obj = args[1].As<Napi::Object>();
     options = parse_options(opts_obj);
     populate_extension_names(opts_obj, extension_names);
   }
 
-  Utf8String markdown(args[0]);
-  char* result = markdown_to_html(*markdown, markdown.length(), options, extension_names);
-  args.GetReturnValue().Set(New<String>(result).ToLocalChecked());
+  string markdown = args[0].As<Napi::String>().Utf8Value();
+  char* result = markdown_to_html(markdown.c_str(), markdown.length(), options, extension_names);
+  Napi::String ret = Napi::String::New(args.Env(), result);
   free(result);
   delete extension_names;
+  return ret;
 }

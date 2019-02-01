@@ -1,23 +1,8 @@
 #ifndef NODE_CMARK_ASYNC_H
 #define NODE_CMARK_ASYNC_H
 
-#include <v8.h>
-#include <nan.h>
-#include <uv.h>
+#include "napi.h"
 
-class RenderWork {
-public:
-  RenderWork(Nan::Utf8String* markdown, Nan::Callback* callback, const int options, std::vector<std::string>* extension_names);
-  uv_work_t request;
-  Nan::Utf8String* markdown;
-  Nan::Callback callback;
-  int options;
-  std::vector<std::string>* extension_names;
-  char* result;
-};
-
-void render_html_async(const Nan::FunctionCallbackInfo<v8::Value>& info);
-void do_render(uv_work_t* request);
-void after_render(uv_work_t* request, int status);
+Napi::Value render_html_async(const Napi::CallbackInfo& info);
 
 #endif

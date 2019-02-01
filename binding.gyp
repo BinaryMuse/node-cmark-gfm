@@ -14,9 +14,15 @@
     },
     {
       'target_name': 'binding',
-      'dependencies': [ 'build_cmark' ],
+      'defines': [
+        'NAPI_DISABLE_CPP_EXCEPTIONS'
+      ],
+      'dependencies': [
+        'build_cmark',
+        "<!(node -p \"require('node-addon-api').gyp\")"
+      ],
       'include_dirs': [
-        '<!(node -e "require(\'nan\')")',
+        "<!@(node -p \"require('node-addon-api').include\")",
         'src',
         'cmark/src',
         'cmark/extensions',

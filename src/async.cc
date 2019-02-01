@@ -1,6 +1,4 @@
-#include <v8.h>
-#include <nan.h>
-#include <uv.h>
+#include "napi.h"
 
 #include "cmark.h"
 #include "markdown.h"
@@ -8,83 +6,68 @@
 
 using std::vector;
 using std::string;
-using Nan::Callback;
-using Nan::FunctionCallbackInfo;
-using Nan::New;
-using Nan::ThrowTypeError;
-using Nan::Utf8String;
-using v8::Function;
-using v8::Local;
-using v8::Object;
-using v8::String;
-using v8::Value;
 
-RenderWork::RenderWork(Utf8String* markdown, Callback* callback, const int options, vector<string>* extension_names) {
-  Local<Function> cb = callback->GetFunction();
-  this->markdown = markdown;
-  this->callback.Reset(cb);
-  this->extension_names = extension_names;
-  this->options = options;
-};
-
-void render_html_async(const FunctionCallbackInfo<Value>& args) {
-  if (args.Length() < 1) {
-    ThrowTypeError("Missing argument 'markdown'");
-    return;
+class RenderWorker : public Napi::AsyncWorker {
+public:
+  RenderWorker(Napi::Function& callback, const string markdown, const int options, vector<string>* extension_names)
+    : Napi::AsyncWorker(callback), markdown(markdown), options(options), extension_names(extension_names) {}
+  ~RenderWorker() {
+    delete extension_names;
+    cmark_mem* default_mem = cmark_get_default_mem_allocator();
+    default_mem->free(result);
   }
 
-  if (!args[0]->IsString()) {
-    ThrowTypeError("Expected argument 'markdown' to be a string");
-    return;
+  void Execute() {
+    result = markdown_to_html(markdown.c_str(), markdown.length(), options, extension_names);
+  }
+
+  void OnOK() {
+    Napi::HandleScope scope(Env());
+    Callback().Call({ Napi::String::New(Env(), result) });
+  }
+
+private:
+  const string markdown;
+  char* result;
+  const int options;
+  vector<string>* extension_names;
+};
+
+Napi::Value render_html_async(const Napi::CallbackInfo& args) {
+  if (args.Length() < 1) {
+    Napi::Error::New(args.Env(), "Missing argument 'markdown'").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
+  }
+
+  if (!args[0].IsString()) {
+    Napi::Error::New(args.Env(), "Expected argument 'markdown' to be a string").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
   }
 
   if (args.Length() < 3) {
-    ThrowTypeError("Missing argument 'callback'");
-    return;
+    Napi::Error::New(args.Env(), "Missing argument 'callback'").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
   }
 
-  if (!args[1]->IsObject()) {
-    ThrowTypeError("Expected argument 'options' to be an object");
-    return;
+  if (!args[1].IsObject()) {
+    Napi::Error::New(args.Env(), "Expected argument 'options' to be an object").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
   }
 
-  if(!args[2]->IsFunction()) {
-    ThrowTypeError("Expected argument 'callback' to be a function");
-    return;
+  if(!args[2].IsFunction()) {
+    Napi::Error::New(args.Env(), "Expected argument 'callback' to be a function").ThrowAsJavaScriptException();
+    return args.Env().Undefined();
   }
 
   vector<string>* extension_names = new vector<string>;
-  Local<Object> opts_obj = args[1]->ToObject();
+  Napi::Object opts_obj = args[1].As<Napi::Object>();
   int options = parse_options(opts_obj);
   populate_extension_names(opts_obj, extension_names);
-  Callback callback(args[2].As<Function>());
-  Utf8String* markdown = new Utf8String(args[0]);
+  Napi::Function callback = args[2].As<Napi::Function>();
+  string markdown = args[0].As<Napi::String>().Utf8Value();
 
-  RenderWork* work = new RenderWork(markdown, &callback, options, extension_names);
-  work->request.data = work;
+  RenderWorker* worker = new RenderWorker(callback, markdown, options, extension_names);
+  worker->Queue();
 
-  uv_queue_work(uv_default_loop(), &work->request, do_render, after_render);
-}
-
-void do_render(uv_work_t* request) {
-  RenderWork* work = static_cast<RenderWork*>(request->data);
-  Utf8String* markdown = work->markdown;
-  vector<string>* extension_names = work->extension_names;
-  char* result = markdown_to_html(**markdown, markdown->length(), work->options, extension_names);
-  work->result = result;
-}
-
-void after_render(uv_work_t* request, int status) {
-  Nan::HandleScope scope;
-  RenderWork* work = static_cast<RenderWork*>(request->data);
-  char* result = work->result;
-  Local<Value> argv[] = { New<String>(result).ToLocalChecked() };
-  work->callback.Call(1, argv);
-
-  work->callback.Reset();
-  delete work->markdown;
-  delete work->extension_names;
-  cmark_mem* default_mem = cmark_get_default_mem_allocator();
-  default_mem->free(work->result);
-  delete work;
+  return args.Env().Undefined();
 }

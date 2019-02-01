@@ -1,5 +1,4 @@
-#include <v8.h>
-#include <nan.h>
+#include "napi.h"
 
 #include "cmark.h"
 #include "markdown.h"
@@ -10,58 +9,46 @@
 
 using std::vector;
 using std::string;
-using v8::Array;
-using v8::Local;
-using v8::Object;
-using v8::String;
-using v8::Value;
-using Nan::Equals;
-using Nan::Get;
-using Nan::MaybeLocal;
-using Nan::New;
-using Nan::ThrowTypeError;
-using Nan::True;
 
 void node_cmark_init() {
   core_extensions_ensure_registered();
 }
 
-void populate_extension_names(Local<Object> options_obj, vector<string>* extension_names) {
-  Local<String> name = New("extensions").ToLocalChecked();
-  MaybeLocal<Value> val = Get(options_obj, name);
-  if (val.IsEmpty()) return;
+void populate_extension_names(Napi::Object options_obj, vector<string>* extension_names) {
+  Napi::Env env = options_obj.Env();
+  Napi::Value name = Napi::String::New(env, "extensions");
+  Napi::Value val = options_obj.Get(name);
+  if (val.IsEmpty() || !val.IsArray()) return;
 
-  Local<Array> exts = Local<Array>::Cast(val.ToLocalChecked());
-  for(uint32_t i = 0; i < exts->Length(); i++) {
-    Local<Value> ext_name = exts->Get(i);
-    if (!ext_name->IsString()) {
-      string bad_ext_name(*Nan::Utf8String(ext_name->ToString()));
+  Napi::Array exts = val.As<Napi::Array>();
+  for(uint32_t i = 0; i < exts.Length(); i++) {
+    Napi::Value ext_name = exts.Get(i);
+    if (!ext_name.IsString()) {
+      string bad_ext_name(ext_name.ToString());
       string err_msg = "'" + bad_ext_name + "' is not a valid extension name.";
-      ThrowTypeError(err_msg.c_str());
+      Napi::Error::New(env, err_msg.c_str()).ThrowAsJavaScriptException();
       return;
     }
-    Nan::Utf8String ext(ext_name);
-    cmark_syntax_extension* stx_ext = cmark_find_syntax_extension(*ext);
+    string ext = ext_name.ToString().Utf8Value();
+    cmark_syntax_extension* stx_ext = cmark_find_syntax_extension(ext.c_str());
     if (stx_ext == NULL) {
-      string bad_ext_name(*ext);
-      string err_msg = "'" + bad_ext_name + "' is not a valid extension name.";
-      ThrowTypeError(err_msg.c_str());
+      string err_msg = "'" + ext + "' is not a valid extension name.";
+      Napi::Error::New(env, err_msg.c_str()).ThrowAsJavaScriptException();
       return;
     }
-    extension_names->push_back(*ext);
+    extension_names->push_back(ext);
   }
 }
 
-int get_option(Local<Object> options_obj, const char* option_name, int option_mask) {
-  Local<String> name = New(option_name).ToLocalChecked();
-  MaybeLocal<Value> val = Get(options_obj, name);
+int get_option(Napi::Object options_obj, const char* option_name, int option_mask) {
+  Napi::Value val = options_obj.Get(option_name);
   if (val.IsEmpty()) return 0;
 
-  Local<Value> bool_val = val.ToLocalChecked();
-  return Equals(bool_val, True()).FromMaybe(false) ? option_mask : 0;
+  bool bool_val = val.ToBoolean().Value();
+  return bool_val ? option_mask : 0;
 }
 
-int parse_options(Local<Object> options_obj) {
+int parse_options(Napi::Object options_obj) {
   int result = CMARK_OPT_DEFAULT;
   result |= get_option(options_obj, "sourcepos", CMARK_OPT_SOURCEPOS);
   result |= get_option(options_obj, "safe", CMARK_OPT_SAFE);

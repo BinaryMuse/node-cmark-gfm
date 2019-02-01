@@ -14,9 +14,15 @@
     },
     {
       'target_name': 'binding',
-      'dependencies': [ 'build_cmark' ],
+      'defines': [
+        'NAPI_DISABLE_CPP_EXCEPTIONS'
+      ],
+      'dependencies': [
+        'build_cmark',
+        "<!(node -p \"require('node-addon-api').gyp\")"
+      ],
       'include_dirs': [
-        '<!(node -e "require(\'nan\')")',
+        "<!@(node -p \"require('node-addon-api').include\")",
         'src',
         'cmark/src',
         'cmark/extensions',
@@ -59,7 +65,13 @@
         'cmark/extensions/strikethrough.c',
         'cmark/extensions/table.c',
         'cmark/extensions/tagfilter.c'
-      ]
+      ],
+      'xcode_settings': {
+        'MACOSX_DEPLOYMENT_TARGET': '10.8',
+        'CLANG_CXX_LIBRARY': 'libc++',
+        'CLANG_CXX_LANGUAGE_STANDARD': 'c++11',
+        'GCC_VERSION': 'com.apple.compilers.llvm.clang.1_0'
+      }
     }
   ]
 }

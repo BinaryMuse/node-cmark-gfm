@@ -1,9 +1,8 @@
 #ifndef NODE_CMARK_SYNC_H
 #define NODE_CMARK_SYNC_H
 
-#include <v8.h>
-#include <nan.h>
+#include "napi.h"
 
-void render_html_sync(const Nan::FunctionCallbackInfo<v8::Value>& info);
+Napi::Value render_html_sync(const Napi::CallbackInfo& info);
 
 #endif

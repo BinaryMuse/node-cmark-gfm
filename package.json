@@ -15,9 +15,9 @@
   "author": "Michelle Tilley <michelle@michelletilley.net>",
   "license": "MIT",
   "dependencies": {
-    "bindings": "^1.2.1",
-    "cmake-js": "^3.5.0",
-    "nan": "^2.4.0"
+    "bindings": "^1.4.0",
+    "cmake-js": "^3.7.3",
+    "nan": "^2.12.1"
   },
   "devDependencies": {
     "@alrra/travis-scripts": "^3.0.1",
@@ -25,6 +25,6 @@
     "chai-html": "^1.1.0",
     "dedent": "^0.6.0",
     "mocha": "^3.1.2",
-    "node-gyp": "^3.6.2"
+    "node-gyp": "^3.8.0"
   }
 }

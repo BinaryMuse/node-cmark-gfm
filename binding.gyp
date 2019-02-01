@@ -65,6 +65,13 @@
         'cmark/extensions/strikethrough.c',
         'cmark/extensions/table.c',
         'cmark/extensions/tagfilter.c'
+      ],
+      'conditions': [
+        ["OS == 'mac'", {
+          'ccflags': [
+            '-mmacosx-version-min=10.7'
+          ]
+        }]
       ]
     }
   ]

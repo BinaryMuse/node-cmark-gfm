@@ -71,7 +71,7 @@ module.exports = {
     return bindings.cmark_version
   },
 
-  createWriteStream: function(options) {
+  createStreamingParser: function(options) {
     return new StreamingParser(options)
   }
 }

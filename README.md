@@ -27,9 +27,9 @@ Converts a Markdown string to HTML asynchronously. If you do not provide a `call
     * `err` - any error that occurred
     * `html` - the resulting HTML
 
-**`createWriteStream([options])`**
+**`createStreamingParser([options])`**
 
-Creates a [Duplex stream](https://nodejs.org/api/stream.html#stream_class_stream_duplex) with a writable end that accepts Markdown and a readable end that produces HTML.
+Creates a [Duplex stream](https://nodejs.org/api/stream.html#stream_class_stream_duplex) with a writable end that accepts Markdown and a readable end that produces HTML. The parser ingests Markdown and converts to HTML asynchronously.
 
   * `options` - a hash of options (see *Options*, below)
 
@@ -91,6 +91,6 @@ const fs = require('fs')
 const cmarkOptions = { ... }
 
 fs.createReadStream('./input.md')
-  .pipe(cmark.createWriteStream(cmarkOptions))
+  .pipe(cmark.createStreamingParser(cmarkOptions))
   .pipe(fs.createWriteStream('./output.html'))
 ```

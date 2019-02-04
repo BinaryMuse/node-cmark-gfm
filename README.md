@@ -50,8 +50,8 @@ You can control the behavior of cmark-gfm by passing options to the rendering fu
   * `unsafe` - if `true`, allows raw HTML and unsafe links (`javascript:`, `vbscript:`, `file:`, and `data:` except for `image/png`, `image/gif`, `image/jpeg`, or `image/webp` mime types). Otherwise, raw HTML is replaced by a placeholder HTML comment, and unsafe links are replaced with empty strings.
   * `extensions` - an array of extensions to enable. Valid extensions are:
     * `"table"` - render tables
-    * `"strikethrough"` - strikethrough
-    * `"tagfilter"` - whitelist something
+    * `"strikethrough"` - enable strikethrough
+    * `"tagfilter"` - filters out certain tags when rendering HTML
     * `"autolink"` - automatically turn URLs into links
     * `"tasklist"` - renders GitHub style task lists
 

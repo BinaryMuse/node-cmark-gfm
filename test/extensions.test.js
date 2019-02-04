@@ -55,7 +55,7 @@ describe('extensions', () => {
       <div>What a weird &lt;xmp> tag</div>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['tagfilter']})
+      const rendered = cmark.renderHtmlSync(markdown, {unsafe: true, extensions: ['tagfilter']})
       assert.htmlEqual(rendered, html)
     })
   })
@@ -71,6 +71,25 @@ describe('extensions', () => {
       `
 
       const rendered = cmark.renderHtmlSync(markdown, {extensions: ['autolink']})
+      assert.htmlEqual(rendered, html)
+    })
+  })
+
+  describe('tasklist', () => {
+    it('renders GitHub-style task lists', () => {
+      const markdown = dedent`
+      - [ ] Task 1
+      - [x] Task 2
+      `
+
+      const html = `
+      <ul>
+        <li class="task-list-item"><input type="checkbox" disabled="" /> Task 1</li>
+        <li class="task-list-item"><input type="checkbox" checked="" disabled="" /> Task 2</li>
+      </ul>
+      `
+
+      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['tasklist']})
       assert.htmlEqual(rendered, html)
     })
   })

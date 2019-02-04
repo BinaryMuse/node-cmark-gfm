@@ -1,6 +1,6 @@
 #include "napi.h"
 
-#include "cmark.h"
+#include "cmark-gfm.h"
 #include "markdown.h"
 #include "sync.h"
 #include "async.h"

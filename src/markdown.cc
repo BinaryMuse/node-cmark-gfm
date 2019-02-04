@@ -1,17 +1,17 @@
 #include "napi.h"
 
-#include "cmark.h"
+#include "cmark-gfm.h"
 #include "markdown.h"
 #include "parser.h"
 #include "registry.h"
 #include "syntax_extension.h"
-#include "core-extensions.h"
+#include "cmark-gfm-core-extensions.h"
 
 using std::vector;
 using std::string;
 
 void node_cmark_init() {
-  core_extensions_ensure_registered();
+  cmark_gfm_core_extensions_ensure_registered();
 }
 
 void populate_extension_names(Napi::Object options_obj, vector<string>* extension_names) {
@@ -50,13 +50,20 @@ int get_option(Napi::Object options_obj, const char* option_name, int option_mas
 
 int parse_options(Napi::Object options_obj) {
   int result = CMARK_OPT_DEFAULT;
+  // rendering options
   result |= get_option(options_obj, "sourcepos", CMARK_OPT_SOURCEPOS);
-  result |= get_option(options_obj, "safe", CMARK_OPT_SAFE);
-  result |= get_option(options_obj, "nobreaks", CMARK_OPT_NOBREAKS);
   result |= get_option(options_obj, "hardbreaks", CMARK_OPT_HARDBREAKS);
-  result |= get_option(options_obj, "normalize", CMARK_OPT_NORMALIZE);
+  result |= get_option(options_obj, "nobreaks", CMARK_OPT_NOBREAKS);
+  // parsing options
   result |= get_option(options_obj, "validateUtf8", CMARK_OPT_VALIDATE_UTF8);
   result |= get_option(options_obj, "smart", CMARK_OPT_SMART);
+  result |= get_option(options_obj, "githubPreLang", CMARK_OPT_GITHUB_PRE_LANG);
+  result |= get_option(options_obj, "liberalHtmlTag", CMARK_OPT_LIBERAL_HTML_TAG);
+  result |= get_option(options_obj, "footnotes", CMARK_OPT_FOOTNOTES);
+  result |= get_option(options_obj, "strikethroughDoubleTilde", CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE);
+  result |= get_option(options_obj, "tablePreferStyleAttributes", CMARK_OPT_TABLE_PREFER_STYLE_ATTRIBUTES);
+  result |= get_option(options_obj, "fullInfoString", CMARK_OPT_FULL_INFO_STRING);
+  result |= get_option(options_obj, "unsafe", CMARK_OPT_UNSAFE);
   return result;
 }
 

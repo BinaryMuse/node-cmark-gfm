@@ -18,7 +18,12 @@ void populate_extension_names(Napi::Object options_obj, vector<string>* extensio
   Napi::Env env = options_obj.Env();
   Napi::Value name = Napi::String::New(env, "extensions");
   Napi::Value val = options_obj.Get(name);
-  if (val.IsEmpty() || !val.IsArray()) return;
+  if (val.IsEmpty() || val.IsNull() || val.IsUndefined()) return;
+  if (!val.IsArray()) {
+    string err_msg = "The 'extensions' property should be an array of extension names";
+    Napi::Error::New(env, err_msg.c_str()).ThrowAsJavaScriptException();
+    return;
+  }
 
   Napi::Array exts = val.As<Napi::Array>();
   for(uint32_t i = 0; i < exts.Length(); i++) {

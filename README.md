@@ -1,11 +1,11 @@
-# node-cmark
+# cmark-gfm
 
-node-cmark is a Node.js wrapper around GitHub's fork of [cmark](https://github.com/github/cmark-gfm), the reference implementation of [CommonMark](http://commonmark.org/) in C by John MacFarlane. You can find GitHub's fork at https://github.com/github/cmark-gfm.
+cmark-gfm is a Node.js wrapper around GitHub's [GFM-enhanced](https://github.github.com/gfm/) fork of [cmark](https://github.com/github/cmark-gfm), the reference implementation of [CommonMark](http://commonmark.org/) in C by John MacFarlane. You can find GitHub's fork at https://github.com/github/cmark-gfm.
 
 ## Installation
 
 ```
-npm install @binarymuse/cmark
+npm install cmark-gfm
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ npm install @binarymuse/cmark
 
 **Options**
 
-You can control the behavior of node-cmark by passing options to the rendering functions. The available options are:
+You can control the behavior of cmark-gfm by passing options to the rendering functions. The available options are:
 
   * `sourepos` - if `true`, adds a `data-sourcepos` attribute to all block elements that TODO??
   * `hardbreaks` - if `true`, renders softbreak elements as hard line breaks
@@ -49,7 +49,7 @@ You can control the behavior of node-cmark by passing options to the rendering f
 You can turn a string containing Markdown into HTML either synchronously:
 
 ```javascript
-const cmark = require('node-cmark')
+const cmark = require('cmark-gfm')
 
 const markdown = '# Hello World'
 const options = {}
@@ -60,7 +60,7 @@ console.log(html)
 or asynchronously
 
 ```javascript
-const cmark = require('node-cmark')
+const cmark = require('cmark-gfm')
 
 const markdown = '# Hello World'
 const options = {}

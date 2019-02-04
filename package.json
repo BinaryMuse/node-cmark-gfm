@@ -1,7 +1,7 @@
 {
-  "name": "@binarymuse/cmark",
+  "name": "cmark-gfm",
   "version": "0.0.6",
-  "description": "Node bindings to the cmark Markdown parser",
+  "description": "Node bindings to GitHub's GFM-enhanced fork of the cmark Markdown parser",
   "main": "index.js",
   "scripts": {
     "build": "node-gyp rebuild",
@@ -10,7 +10,9 @@
   "keywords": [
     "markdown",
     "cmark",
-    "commonmark"
+    "commonmark",
+    "gfm",
+    "cmark-gfm"
   ],
   "author": "Michelle Tilley <michelle@michelletilley.net>",
   "license": "MIT",

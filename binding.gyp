@@ -40,6 +40,7 @@
         'cmark/src/cmark.c',
         'cmark/src/cmark_ctype.c',
         'cmark/src/commonmark.c',
+        'cmark/src/footnotes.c',
         'cmark/src/houdini_href_e.c',
         'cmark/src/houdini_html_e.c',
         'cmark/src/houdini_html_u.c',
@@ -50,7 +51,9 @@
         'cmark/src/linked_list.c',
         'cmark/src/main.c',
         'cmark/src/man.c',
+        'cmark/src/map.c',
         'cmark/src/node.c',
+        'cmark/src/plaintext.c',
         'cmark/src/plugin.c',
         'cmark/src/references.c',
         'cmark/src/registry.c',
@@ -64,7 +67,8 @@
         'cmark/extensions/ext_scanners.c',
         'cmark/extensions/strikethrough.c',
         'cmark/extensions/table.c',
-        'cmark/extensions/tagfilter.c'
+        'cmark/extensions/tagfilter.c',
+        'cmark/extensions/tasklist.c',
       ],
       'xcode_settings': {
         'MACOSX_DEPLOYMENT_TARGET': '10.8',

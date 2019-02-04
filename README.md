@@ -37,7 +37,7 @@ Creates a [Duplex stream](https://nodejs.org/api/stream.html#stream_class_stream
 
 You can control the behavior of cmark-gfm by passing options to the rendering functions. The available options are:
 
-  * `sourepos` - if `true`, adds a `data-sourcepos` attribute to all block elements that TODO??
+  * `sourcepos` - if `true`, adds a `data-sourcepos` attribute to all block elements that indicate the range of original Markdown text that resulted in the element
   * `hardbreaks` - if `true`, renders softbreak elements as hard line breaks
   * `nobreaks` - if `true`, renders softbreak elements as spaces
   * `validateUtf8` - if `true`, replaces illegal UTF-8 sequences with `U+FFFD`

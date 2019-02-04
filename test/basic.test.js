@@ -11,7 +11,8 @@ describe('#renderHtmlSync', () => {
 describe('#renderHtml', () => {
   it('renders HTML asynchronously', (done) => {
     let ticked = false
-    cmark.renderHtml('# Hi', (html) => {
+    cmark.renderHtml('# Hi', (err, html) => {
+      assert.notOk(err)
       assert.htmlEqual(html, '<h1>Hi</h1>')
       assert.ok(ticked)
       done()

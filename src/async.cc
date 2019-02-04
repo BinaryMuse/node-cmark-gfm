@@ -23,7 +23,7 @@ public:
 
   void OnOK() {
     Napi::HandleScope scope(Env());
-    Callback().Call({ Napi::String::New(Env(), result) });
+    Callback().Call({ Env().Undefined(), Napi::String::New(Env(), result) });
   }
 
 private:

@@ -75,7 +75,13 @@ const cmark = require('cmark-gfm')
 
 const markdown = '# Hello World'
 const options = {}
-cmark.renderHtml(markdown, options, (html) => {
+// either use a callback...
+cmark.renderHtml(markdown, options, html => {
+  console.log(html)
+})
+// ... or a promise
+const promise = cmark.renderHtml(markdown, options)
+promise.then(html => {
   console.log(html)
 })
 ```

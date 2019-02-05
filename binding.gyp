@@ -8,6 +8,9 @@
       'dependencies': [
         "<!(node -p \"require('node-addon-api').gyp\")"
       ],
+      'cflags': [
+        '-std=c99'
+      ],
       'include_dirs': [
         "<!@(node -p \"require('node-addon-api').include\")",
         'src',

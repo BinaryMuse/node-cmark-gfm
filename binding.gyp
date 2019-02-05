@@ -53,7 +53,9 @@
     {
       'target_name': 'binding',
       'defines': [
-        'NAPI_DISABLE_CPP_EXCEPTIONS'
+        'NAPI_DISABLE_CPP_EXCEPTIONS',
+        'CMARK_GFM_STATIC_DEFINE',
+        'CMARK_GFM_EXTENSIONS_STATIC_DEFINE'
       ],
       'dependencies': [
         'libcmark-gfm',

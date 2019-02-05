@@ -1,17 +1,5 @@
 {
   'targets': [
-    # {
-    #   'target_name': 'build_cmark',
-    #   'type': 'none',
-    #   'actions': [
-    #     {
-    #       'action_name': 'build_cmark',
-    #       'inputs': [],
-    #       'outputs': ['cmark/build'],
-    #       'action': ['cmake-js', '-d', 'cmark', 'compile']
-    #     }
-    #   ]
-    # },
     {
       'target_name': 'binding',
       'defines': [
@@ -23,10 +11,7 @@
       'include_dirs': [
         "<!@(node -p \"require('node-addon-api').include\")",
         'src',
-        'vendor/cmark',
-        # 'cmark/extensions',
-        # 'cmark/build/extensions',
-        # 'cmark/build/src'
+        'vendor/cmark'
       ],
       'sources': [
         'src/markdown.cc',
@@ -48,7 +33,6 @@
         'vendor/cmark/iterator.c',
         'vendor/cmark/latex.c',
         'vendor/cmark/linked_list.c',
-        # 'vendor/cmark/main.c',
         'vendor/cmark/man.c',
         'vendor/cmark/map.c',
         'vendor/cmark/node.c',

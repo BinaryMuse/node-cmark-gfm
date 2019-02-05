@@ -12,21 +12,32 @@ npm install cmark-gfm
 
 **`html = renderHtmlSync(markdown[, options])`**
 
+Converts a Markdown string to HTML synchronously.
+
   * `markdown` - a string containing Markdown to render to HTML
   * `options` - a hash of options (see *Options*, below)
 
-**`renderHtml(markdown[, options], callback)`**
+**`renderHtml(markdown[, options][, callback])`**
+
+Converts a Markdown string to HTML asynchronously. If you do not provide a `callback`, `renderHtml` will return a `Promise` that will resolve to the resulting HTML.
 
   * `markdown` - a string containing Markdown to render to HTML
   * `options` - a hash of options (see *Options*, below)
   * `callback` - a function to call with the resulting HTML once the Markdown has been rendered
+    * `err` - any error that occurred
     * `html` - the resulting HTML
+
+**`createStreamingParser([options])`**
+
+Creates a [Duplex stream](https://nodejs.org/api/stream.html#stream_class_stream_duplex) with a writable end that accepts Markdown and a readable end that produces HTML. The parser ingests Markdown and converts to HTML asynchronously.
+
+  * `options` - a hash of options (see *Options*, below)
 
 **Options**
 
 You can control the behavior of cmark-gfm by passing options to the rendering functions. The available options are:
 
-  * `sourepos` - if `true`, adds a `data-sourcepos` attribute to all block elements that TODO??
+  * `sourcepos` - if `true`, adds a `data-sourcepos` attribute to all block elements that indicate the range of original Markdown text that resulted in the element
   * `hardbreaks` - if `true`, renders softbreak elements as hard line breaks
   * `nobreaks` - if `true`, renders softbreak elements as spaces
   * `validateUtf8` - if `true`, replaces illegal UTF-8 sequences with `U+FFFD`
@@ -39,8 +50,8 @@ You can control the behavior of cmark-gfm by passing options to the rendering fu
   * `unsafe` - if `true`, allows raw HTML and unsafe links (`javascript:`, `vbscript:`, `file:`, and `data:` except for `image/png`, `image/gif`, `image/jpeg`, or `image/webp` mime types). Otherwise, raw HTML is replaced by a placeholder HTML comment, and unsafe links are replaced with empty strings.
   * `extensions` - an array of extensions to enable. Valid extensions are:
     * `"table"` - render tables
-    * `"strikethrough"` - strikethrough
-    * `"tagfilter"` - whitelist something
+    * `"strikethrough"` - enable strikethrough
+    * `"tagfilter"` - filters out certain tags when rendering HTML
     * `"autolink"` - automatically turn URLs into links
     * `"tasklist"` - renders GitHub style task lists
 
@@ -64,9 +75,28 @@ const cmark = require('cmark-gfm')
 
 const markdown = '# Hello World'
 const options = {}
-cmark.renderHtml(markdown, options, (html) => {
+// either use a callback...
+cmark.renderHtml(markdown, options, html => {
+  console.log(html)
+})
+// ... or a promise
+const promise = cmark.renderHtml(markdown, options)
+promise.then(html => {
   console.log(html)
 })
 ```
 
 Note that `options` may be omitted in either invocation.
+
+cmark-gfm also exposes a streaming parser that you can pipe streams of Markdown into.
+
+```javascript
+const cmark = require('cmark-gfm')
+const fs = require('fs')
+
+const cmarkOptions = { ... }
+
+fs.createReadStream('./input.md')
+  .pipe(cmark.createStreamingParser(cmarkOptions))
+  .pipe(fs.createWriteStream('./output.html'))
+```

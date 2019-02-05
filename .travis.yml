@@ -16,7 +16,6 @@ node_js:
   - 10
 
 install:
-  - cd cmark && make && cd ..
   - npm install
 
 script:

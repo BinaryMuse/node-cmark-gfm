@@ -32,7 +32,7 @@
       'sources': [
         'src/markdown.cc',
         'src/sync.cc',
-        'src/async.cc',
+        'src/streaming_parser.cc',
         'src/binding.cc',
         'cmark/src/arena.c',
         'cmark/src/blocks.c',

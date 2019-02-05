@@ -13,7 +13,6 @@ extern "C" {
   typedef char bool;
 #endif
 
-#define HAVE___BUILTIN_EXPECT
 
 #define HAVE___ATTRIBUTE__
 

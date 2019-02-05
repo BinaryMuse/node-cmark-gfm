@@ -1,26 +1,15 @@
 {
   'targets': [
     {
-      'target_name': 'binding',
-      'defines': [
-        'NAPI_DISABLE_CPP_EXCEPTIONS'
-      ],
-      'dependencies': [
-        "<!(node -p \"require('node-addon-api').gyp\")"
-      ],
+      'target_name': 'libcmark-gfm',
+      'type': 'static_library',
       'cflags': [
         '-std=c99'
       ],
       'include_dirs': [
-        "<!@(node -p \"require('node-addon-api').include\")",
-        'src',
         'vendor/cmark'
       ],
       'sources': [
-        'src/markdown.cc',
-        'src/sync.cc',
-        'src/streaming_parser.cc',
-        'src/binding.cc',
         'vendor/cmark/arena.c',
         'vendor/cmark/blocks.c',
         'vendor/cmark/buffer.c',
@@ -55,7 +44,36 @@
         'vendor/cmark/table.c',
         'vendor/cmark/tagfilter.c',
         'vendor/cmark/tasklist.c',
+      ]
+    },
+    {
+      'target_name': 'binding',
+      'defines': [
+        'NAPI_DISABLE_CPP_EXCEPTIONS'
       ],
+      'dependencies': [
+        'libcmark-gfm',
+        "<!(node -p \"require('node-addon-api').gyp\")"
+      ],
+      'cflags': [
+        '-std=c++11'
+      ],
+      'include_dirs': [
+        "<!@(node -p \"require('node-addon-api').include\")",
+        'src',
+        'vendor/cmark'
+      ],
+      'sources': [
+        'src/markdown.cc',
+        'src/sync.cc',
+        'src/streaming_parser.cc',
+        'src/binding.cc',
+      ],
+      'link_settings': {
+        'libraries': [
+          '<(module_root_dir)/build/Release/cmark-gfm.a'
+        ],
+      },
       'xcode_settings': {
         'MACOSX_DEPLOYMENT_TARGET': '10.8',
         'CLANG_CXX_LIBRARY': 'libc++',

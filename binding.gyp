@@ -8,7 +8,7 @@
           'action_name': 'build_cmark',
           'inputs': [],
           'outputs': ['cmark/build'],
-          'action': ['node', 'node_modules/.bin/cmake-js', '-d', 'cmark', 'compile']
+          'action': ['cmake-js', '-d', 'cmark', 'compile']
         }
       ]
     },

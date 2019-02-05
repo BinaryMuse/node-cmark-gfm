@@ -6,9 +6,6 @@ sudo: false
 
 language: node_js
 
-env:
-- CFLAGS="-std=c99"
-
 node_js:
   - node
   - 6

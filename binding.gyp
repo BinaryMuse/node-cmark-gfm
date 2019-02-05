@@ -1,74 +1,73 @@
 {
   'targets': [
-    {
-      'target_name': 'build_cmark',
-      'type': 'none',
-      'actions': [
-        {
-          'action_name': 'build_cmark',
-          'inputs': [],
-          'outputs': ['cmark/build'],
-          'action': ['cmake-js', '-d', 'cmark', 'compile']
-        }
-      ]
-    },
+    # {
+    #   'target_name': 'build_cmark',
+    #   'type': 'none',
+    #   'actions': [
+    #     {
+    #       'action_name': 'build_cmark',
+    #       'inputs': [],
+    #       'outputs': ['cmark/build'],
+    #       'action': ['cmake-js', '-d', 'cmark', 'compile']
+    #     }
+    #   ]
+    # },
     {
       'target_name': 'binding',
       'defines': [
         'NAPI_DISABLE_CPP_EXCEPTIONS'
       ],
       'dependencies': [
-        'build_cmark',
         "<!(node -p \"require('node-addon-api').gyp\")"
       ],
       'include_dirs': [
         "<!@(node -p \"require('node-addon-api').include\")",
         'src',
-        'cmark/src',
-        'cmark/extensions',
-        'cmark/build/extensions',
-        'cmark/build/src'
+        'vendor/cmark',
+        # 'cmark/extensions',
+        # 'cmark/build/extensions',
+        # 'cmark/build/src'
       ],
       'sources': [
         'src/markdown.cc',
         'src/sync.cc',
         'src/streaming_parser.cc',
         'src/binding.cc',
-        'cmark/src/arena.c',
-        'cmark/src/blocks.c',
-        'cmark/src/buffer.c',
-        'cmark/src/cmark.c',
-        'cmark/src/cmark_ctype.c',
-        'cmark/src/commonmark.c',
-        'cmark/src/footnotes.c',
-        'cmark/src/houdini_href_e.c',
-        'cmark/src/houdini_html_e.c',
-        'cmark/src/houdini_html_u.c',
-        'cmark/src/html.c',
-        'cmark/src/inlines.c',
-        'cmark/src/iterator.c',
-        'cmark/src/latex.c',
-        'cmark/src/linked_list.c',
-        'cmark/src/main.c',
-        'cmark/src/man.c',
-        'cmark/src/map.c',
-        'cmark/src/node.c',
-        'cmark/src/plaintext.c',
-        'cmark/src/plugin.c',
-        'cmark/src/references.c',
-        'cmark/src/registry.c',
-        'cmark/src/render.c',
-        'cmark/src/scanners.c',
-        'cmark/src/syntax_extension.c',
-        'cmark/src/utf8.c',
-        'cmark/src/xml.c',
-        'cmark/extensions/autolink.c',
-        'cmark/extensions/core-extensions.c',
-        'cmark/extensions/ext_scanners.c',
-        'cmark/extensions/strikethrough.c',
-        'cmark/extensions/table.c',
-        'cmark/extensions/tagfilter.c',
-        'cmark/extensions/tasklist.c',
+        'vendor/cmark/arena.c',
+        'vendor/cmark/blocks.c',
+        'vendor/cmark/buffer.c',
+        'vendor/cmark/cmark.c',
+        'vendor/cmark/cmark_ctype.c',
+        'vendor/cmark/commonmark.c',
+        'vendor/cmark/footnotes.c',
+        'vendor/cmark/houdini_href_e.c',
+        'vendor/cmark/houdini_html_e.c',
+        'vendor/cmark/houdini_html_u.c',
+        'vendor/cmark/html.c',
+        'vendor/cmark/inlines.c',
+        'vendor/cmark/iterator.c',
+        'vendor/cmark/latex.c',
+        'vendor/cmark/linked_list.c',
+        # 'vendor/cmark/main.c',
+        'vendor/cmark/man.c',
+        'vendor/cmark/map.c',
+        'vendor/cmark/node.c',
+        'vendor/cmark/plaintext.c',
+        'vendor/cmark/plugin.c',
+        'vendor/cmark/references.c',
+        'vendor/cmark/registry.c',
+        'vendor/cmark/render.c',
+        'vendor/cmark/scanners.c',
+        'vendor/cmark/syntax_extension.c',
+        'vendor/cmark/utf8.c',
+        'vendor/cmark/xml.c',
+        'vendor/cmark/autolink.c',
+        'vendor/cmark/core-extensions.c',
+        'vendor/cmark/ext_scanners.c',
+        'vendor/cmark/strikethrough.c',
+        'vendor/cmark/table.c',
+        'vendor/cmark/tagfilter.c',
+        'vendor/cmark/tasklist.c',
       ],
       'xcode_settings': {
         'MACOSX_DEPLOYMENT_TARGET': '10.8',

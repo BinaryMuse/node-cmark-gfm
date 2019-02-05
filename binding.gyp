@@ -6,6 +6,9 @@
       'cflags': [
         '-std=c99'
       ],
+      'defines': [
+        'CMARK_GFM_STATIC_DEFINE'
+      ],
       'include_dirs': [
         'vendor/cmark'
       ],

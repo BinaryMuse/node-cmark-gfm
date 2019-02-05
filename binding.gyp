@@ -75,11 +75,21 @@
         'src/streaming_parser.cc',
         'src/binding.cc',
       ],
-      'link_settings': {
-        'libraries': [
-          '<(module_root_dir)/build/Release/cmark-gfm.a'
-        ],
-      },
+      'conditions': [
+        ['OS=="win"', {
+          'link_settings': {
+            'libraries': [
+              '<(module_root_dir)/build/Release/cmark-gfm.lib'
+            ]
+          }
+        }, {
+          'link_settings': {
+            'libraries': [
+              '<(module_root_dir)/build/Release/cmark-gfm.a'
+            ]
+          }
+        }]
+      ],
       'xcode_settings': {
         'MACOSX_DEPLOYMENT_TARGET': '10.8',
         'CLANG_CXX_LIBRARY': 'libc++',

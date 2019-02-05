@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node-gyp rebuild",
-    "test": "mocha test/helper.js test/*.test.js"
+    "test": "mocha test/helper.js test/*.test.js",
+    "update-vendor": "./script/update-vendor"
   },
   "keywords": [
     "markdown",

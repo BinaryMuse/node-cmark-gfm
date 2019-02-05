@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+cd vendor/cmark/cmark
+make
+cd -
+find -E vendor/cmark/cmark -type f -iregex '.*\.(c|h|inc|re)' | xargs -I{} cp {} vendor/cmark

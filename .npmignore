@@ -1,0 +1,6 @@
+/.gitmodules
+/.travis.yml
+/.binarymuse/
+/.vscode/
+/build/
+/vendor/cmark/cmark/

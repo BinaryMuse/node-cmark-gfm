@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node-gyp rebuild",
-    "test": "mocha test/helper.js test/*.test.js"
+    "test": "mocha test/helper.js test/*.test.js",
+    "update-vendor": "./script/update-vendor"
   },
   "keywords": [
     "markdown",
@@ -17,27 +18,6 @@
   ],
   "author": "Michelle Tilley <michelle@michelletilley.net>",
   "license": "MIT",
-  "files": [
-    "binding.gyp",
-    "index.js",
-    "README.md",
-    "src/**/*",
-    "cmark/CMakeLists.txt",
-    "cmark/COPYING",
-    "cmark/FindAsan.cmake",
-    "cmark/Makefile",
-    "cmark/Makefile.nmake",
-    "cmark/nmake.bat",
-    "cmark/README.md",
-    "cmark/suppressions",
-    "cmark/toolchain-mingw32.cmake",
-    "cmark/src/**/*",
-    "cmark/extensions/**/*",
-    "cmark/api_test/**/*",
-    "cmark/man/**/*",
-    "cmark/test/**/*",
-    "test/**/*"
-  ],
   "dependencies": {
     "bindings": "^1.4.0",
     "cmake-js": "^5.0.1",

@@ -233,7 +233,7 @@ console.log('hello!')
 ```
 ````
 
-would result in the HTML like this:
+would result in HTML like this:
 
 ```html
 <pre>
@@ -365,11 +365,13 @@ The `strikethrough` extension renders text surrounded by `~one~` or `~~two~~` ti
 
 ### `"tagfilter"`
 
-Certain HTML tags can be particularly troublesome as they change how HTML is interpreted in a way unique to them. The `tagfilter` extension escapes these tags by replacing the leading `<` with `&lt;`.
+Certain HTML tags can be particularly troublesome as they change how HTML is interpreted in a way unique to them. The `tagfilter` extension escapes these tags by replacing the leading `<` with `&lt;`. The following markdown:
 
 ```markdown
 <div>What a weird <xmp> tag</div>
 ```
+
+would result in this HTML:
 
 ```html
 <div>What a weird &lt;xmp> tag</div>

@@ -16,7 +16,7 @@ npm install cmark-gfm
 
 Converts a Markdown string to HTML asynchronously. If you do not provide a `callback`, `renderHtml` will return a `Promise` that will resolve to the resulting HTML. If `options` is omitted, default options will be used.
 
-  * `markdown` - a string containing Markdown to convert to HTML
+  * `markdown` - a string of Markdown to convert to HTML
   * `options` - a hash of options (see *Options*, below)
   * `callback` - a Node.js-style callback to call with the resulting HTML once the Markdown has been rendered
     * `error` - any error that occurred
@@ -49,7 +49,7 @@ cmark.renderHtml('# Hello there!', options, (error, html) => {
 
 Converts a Markdown string to HTML synchronously. If `options` is omitted, default options will be used.
 
-  * `markdown` - a string containing Markdown to convert to HTML
+  * `markdown` - a string of Markdown to convert to HTML
   * `options` - a hash of options (see *Options*, below)
 
 Example:
@@ -69,7 +69,7 @@ try {
 
 **`createStreamingParser([options])`**
 
-Creates a [Duplex stream](https://nodejs.org/api/stream.html#stream_class_stream_duplex) with a writable end that accepts Markdown and a readable end that produces HTML. The parser ingests Markdown and converts to HTML asynchronously. If `options` is omitted, default options will be used.
+Creates a [stream](https://nodejs.org/api/stream.html) with a writable end that accepts Markdown and a readable end that produces HTML. The parser ingests Markdown and converts it to HTML asynchronously. If `options` is omitted, default options will be used.
 
   * `options` - a hash of options (see *Options*, below)
 
@@ -88,7 +88,7 @@ fs.createReadStream('./input.md')
 
 ### Options
 
-cmark-gfm supports a variety of options that it passes to the underlying libcmark-gfm library. You can enable an option by setting its name to the value of `true` in your `options` object; for example, to enable the `smart` and `footnotes` options:
+cmark-gfm supports a variety of options that it passes to the underlying libcmark-gfm library. You can enable most options by setting its name to the value of `true` in your `options` object; to enable an extension, add its name to an `extensions` array. For example, to enable the `smart` and `footnotes` options and the `strikethrough` extension:
 
 ```javascript
 const cmark = require('cmark-gfm')
@@ -96,6 +96,7 @@ const cmark = require('cmark-gfm')
 const options = {
   smart: true,
   footnotes: true,
+  extensions: ['strikethrough']
 }
 
 cmark.renderHtml(markdown, options)
@@ -106,20 +107,19 @@ You can find a summary of all the options in the table below, as well as additio
 
 | Name | Type | Description
 |---|---|---|
-| `sourcepos`* | `bool` | Adds a `data-sourcepos` attribute to all block elements that indicate the range of Markdown that resulted in the block element |
+| `sourcepos`* | `bool` | Adds a `data-sourcepos` attribute to elements that indicate the range of Markdown that resulted in the element |
 | `hardbreaks`* | `bool` | Renders softbreak elements as hard line breaks |
 | `nobreaks`* | `bool` | Renders softbreak elements as spaces |
 | `validateUtf8` | `bool` | Replaces illegal UTF-8 sequences with `U+FFFD` |
 | `smart` | `bool` | Replaces straight quotes with curly ones, and turns `---` into em dashes and `--` into en dashes |
 | `githubPreLang`* | `bool` | Uses GitHub style `<pre lang="x">` tags for code blocks |
-| `liberalHtmltag` | `bool` | Allows non-well-formed HTML tags to be parsed as HTML (e.g. `< div>` instead of just `<div>`) |
+| `liberalHtmltag` | `bool` | Allows HTML tags to be parsed as HTML even if they are not well formed (e.g. `< div>` instead of just `<div>`) |
 | `footnotes`* | `bool` | Enables footnote parsing and rendering |
 | `strikethroughDoubleTilde` | `bool` | When enabled, the `strikethrough` extension will only render text as strikethrough if it is surrounded by exactly `~~two tildes~~` |
 | `fullInfoString`* | `bool` | Adds additional code block info as an additional attribute on the resulting HTML element |
 | `unsafe`* | `bool` | Allows raw HTML and unsafe links (`javascript:`, `vbscript:`, `file:`, and `data:` except for `image/png`, `image/gif`, `image/jpeg`, or `image/webp` mime types). Otherwise, raw HTML is replaced by a placeholder HTML comment, and unsafe links are replaced with empty strings. |
 | `extensions`* | `array<string>` | A list of extensions to enable |
-
-*\* more information in the Features and Extensions sections below*
+| *\* more information in the Features and Extensions sections below* |
 
 libcmark-gfm also exposes several Markdown extensions that you can enable by passing their name to the `extensions` option (which is an array of strings). You can find a summary of all the extensions in the table below, as well as additional information in the *Extensions* section later in this document.
 

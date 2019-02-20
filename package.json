@@ -5,9 +5,15 @@
   "repository": "https://github.com/BinaryMuse/node-cmark-gfm",
   "main": "index.js",
   "scripts": {
+    "install": "prebuild-install || node-gyp rebuild",
     "build": "node-gyp rebuild",
     "test": "mocha test/helper.js test/*.test.js",
-    "update-vendor": "./script/update-vendor"
+    "update-vendor": "./script/update-vendor",
+    "prebuild-node": "prebuild -t 8.9.0 -t 9.4.0 -t 10.11.0 -t 11.9.0 --strip",
+    "prebuild-node-ia32": "prebuild -t 8.9.0 -t 9.4.0 -a ia32 --strip",
+    "prebuild-electron": "prebuild -t 2.0.0 -t 3.0.0 -t 4.0.4 -r electron --strip",
+    "prebuild-electron-ia32": "prebuild -t 2.0.0 -t 3.0.0 -t 4.0.4 -r electron -a ia32 --strip",
+    "upload": "node ./script/upload.js"
   },
   "keywords": [
     "markdown",
@@ -20,9 +26,11 @@
   "license": "MIT",
   "dependencies": {
     "bindings": "^1.4.0",
+    "prebuild-install": "^5.2.4",
     "node-addon-api": "*"
   },
   "devDependencies": {
+    "prebuild": "^8.1.2",
     "@alrra/travis-scripts": "^3.0.1",
     "chai": "^3.5.0",
     "chai-html": "^1.1.0",

@@ -6,6 +6,12 @@ describe('#renderHtmlSync', () => {
   it('renders HTML synchronously', () => {
     assert.htmlEqual(cmark.renderHtmlSync('# Hi'), '<h1>Hi</h1>')
   })
+
+  it('handles odd values', () => {
+    assert.equal(cmark.renderHtmlSync(''), '')
+    assert.equal(cmark.renderHtmlSync('   '), '')
+    assert.throws(() => cmark.renderHtmlSync(undefined))
+  })
 })
 
 describe('#renderHtml', () => {
@@ -29,5 +35,11 @@ describe('#renderHtml', () => {
       done()
     })
     ticked = true
+  })
+
+  it('handles odd values', async () => {
+    assert.equal(await cmark.renderHtml(''), '')
+    assert.equal(await cmark.renderHtml('   '), '')
+    assert.throws(() => cmark.renderHtml(undefined))
   })
 })

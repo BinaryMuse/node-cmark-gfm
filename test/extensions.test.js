@@ -126,4 +126,15 @@ describe('extensions', () => {
       cmark.renderHtml('# Hi', {extensions: [{}]})
     })
   })
+
+  it('only enables an extension with a truthy value', () => {
+    const rendered = cmark.renderHtmlSync('- [ ] https://google,com', {
+      extensions: {
+        tasklist: false,
+        autolink: true
+      }
+    })
+    assert.notInclude(rendered, 'checkbox')
+    assert.include(rendered, 'href')
+  })
 })

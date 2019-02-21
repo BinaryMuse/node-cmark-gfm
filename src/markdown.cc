@@ -29,7 +29,7 @@ void populate_extension_names(Napi::Object options_obj, vector<string>* extensio
   Napi::Array exts_keys = exts.GetPropertyNames();
   for(uint32_t i = 0; i < exts_keys.Length(); i++) {
     Napi::Value ext_name = exts_keys.Get(i);
-    Napi::Value ext_enabled = exts.Get(ext_name).ToBoolean();
+    bool ext_enabled = exts.Get(ext_name).ToBoolean().Value();
     if (!ext_enabled) {
       return;
     }

@@ -31,7 +31,7 @@ void populate_extension_names(Napi::Object options_obj, vector<string>* extensio
     Napi::Value ext_name = exts_keys.Get(i);
     bool ext_enabled = exts.Get(ext_name).ToBoolean().Value();
     if (!ext_enabled) {
-      return;
+      continue;
     }
     if (!ext_name.IsString()) {
       string bad_ext_name(ext_name.ToString());

@@ -128,11 +128,13 @@ describe('extensions', () => {
   })
 
   it('only enables an extension with a truthy value', () => {
-    const rendered = cmark.renderHtmlSync('- [ ] Item', {
+    const rendered = cmark.renderHtmlSync('- [ ] https://google,com', {
       extensions: {
-        tasklist: false
+        tasklist: false,
+        autolink: true
       }
     })
     assert.notInclude(rendered, 'checkbox')
+    assert.include(rendered, 'href')
   })
 })

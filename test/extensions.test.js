@@ -26,7 +26,11 @@ describe('extensions', () => {
         </tbody>
       </table>
       `
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['table']})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        extensions: {
+          table: true
+        }
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -40,7 +44,11 @@ describe('extensions', () => {
       const html = `
       <p>It's all about <del>CoffeeScript</del> ES2016</p>
       `
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['strikethrough']})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        extensions: {
+          strikethrough: true
+        }
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -55,7 +63,12 @@ describe('extensions', () => {
       <div>What a weird &lt;xmp> tag</div>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {unsafe: true, extensions: ['tagfilter']})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        unsafe: true,
+        extensions: {
+          tagfilter: true
+        }
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -70,7 +83,11 @@ describe('extensions', () => {
       <p>Visit us at <a href="https://github.com">https://github.com</a>!</p>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['autolink']})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        extensions: {
+          autolink: true
+        }
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -89,7 +106,11 @@ describe('extensions', () => {
       </ul>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['tasklist']})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        extensions: {
+          tasklist: true
+        }
+      })
       assert.htmlEqual(rendered, html)
     })
   })

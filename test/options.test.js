@@ -23,7 +23,9 @@ describe('options', () => {
         <code class="language-javascript">whee</code>
       </pre>
       `
-      const rendered = cmark.renderHtmlSync(markdown, {sourcepos: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        sourcepos: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -39,7 +41,9 @@ describe('options', () => {
       <p>abc def</p>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {nobreaks: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        nobreaks: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -55,7 +59,9 @@ describe('options', () => {
       <p>abc<br>\ndef</p>
       `.trim()
 
-      const rendered = cmark.renderHtmlSync(markdown, {hardbreaks: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        hardbreaks: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -67,7 +73,9 @@ describe('options', () => {
 
       const html = "<p>abc" + '\uFFFD' + "def</p>"
 
-      const rendered = cmark.renderHtmlSync(markdown, {validateUtf8: false})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        validateUtf8: false
+      })
       console.log(rendered)
       assert.htmlEqual(rendered, html)
     })
@@ -83,7 +91,9 @@ describe('options', () => {
       <p>“Good morning,” said the man. “Wait – maybe it’s ‘afternoon’.” — Someone Famous</p>
       `.trim()
 
-      const rendered = cmark.renderHtmlSync(markdown, {smart: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        smart: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -111,7 +121,9 @@ describe('options', () => {
 
       const html = `<pre lang="javascript"><code>console.log('hi')</code></pre>`
 
-      const rendered = cmark.renderHtmlSync(markdown, {githubPreLang: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        githubPreLang: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -122,7 +134,9 @@ describe('options', () => {
 
       const html = `<p>&lt; div&gt;Hello&lt; /div&gt;</p>\n`
 
-      const rendered = cmark.renderHtmlSync(markdown, {unsafe: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        unsafe: true
+      })
       assert.equal(rendered, html)
     })
 
@@ -131,7 +145,10 @@ describe('options', () => {
 
       const html = `<p>< div>Hello< /div></p>\n`
 
-      const rendered = cmark.renderHtmlSync(markdown, {unsafe: true, liberalHtmlTag: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        unsafe: true,
+        liberalHtmlTag: true
+      })
       assert.equal(rendered, html)
     })
   })
@@ -155,7 +172,9 @@ describe('options', () => {
       </section>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {footnotes: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        footnotes: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -165,8 +184,8 @@ describe('options', () => {
       const markdown1 = `This is some ~text~!`
       const markdown2 = `This is some ~~text~~!`
 
-      const rendered1 = cmark.renderHtmlSync(markdown1, {extensions: ['strikethrough']})
-      const rendered2 = cmark.renderHtmlSync(markdown2, {extensions: ['strikethrough']})
+      const rendered1 = cmark.renderHtmlSync(markdown1, { extensions: { strikethrough: true } })
+      const rendered2 = cmark.renderHtmlSync(markdown2, { extensions: { strikethrough: true } })
 
       assert.htmlEqual(rendered1, '<p>This is some <del>text</del>!</p>')
       assert.htmlEqual(rendered2, '<p>This is some <del>text</del>!</p>')
@@ -178,11 +197,15 @@ describe('options', () => {
 
       const rendered1 = cmark.renderHtmlSync(markdown1, {
         strikethroughDoubleTilde: true,
-        extensions: ['strikethrough']
+        extensions: {
+          strikethrough: true
+        }
       })
       const rendered2 = cmark.renderHtmlSync(markdown2, {
         strikethroughDoubleTilde: true,
-        extensions: ['strikethrough']
+        extensions: {
+          strikethrough: true
+        }
       })
 
       assert.htmlEqual(rendered1, '<p>This is some ~text~!</p>')
@@ -215,7 +238,11 @@ describe('options', () => {
       </table>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {extensions: ['table']})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        extensions: {
+          table: true
+        }
+      })
       assert.htmlEqual(rendered, html)
     })
 
@@ -245,7 +272,9 @@ describe('options', () => {
 
       const rendered = cmark.renderHtmlSync(markdown, {
         tablePreferStyleAttributes: true,
-        extensions: ['table']
+        extensions: {
+          table: true
+        }
       })
       assert.htmlEqual(rendered, html)
     })
@@ -279,7 +308,9 @@ describe('options', () => {
       </pre>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {fullInfoString: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        fullInfoString: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })
@@ -319,7 +350,9 @@ describe('options', () => {
       <p><a href="javascript:alert('omg')">link</a></p>
       `
 
-      const rendered = cmark.renderHtmlSync(markdown, {unsafe: true})
+      const rendered = cmark.renderHtmlSync(markdown, {
+        unsafe: true
+      })
       assert.htmlEqual(rendered, html)
     })
   })

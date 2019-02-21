@@ -14,9 +14,9 @@ install:
   - npm install
 
 script:
+  - npm test
   - npm run prebuild-node
   - npm run prebuild-node-ia32
   - npm run prebuild-electron
   - npm run prebuild-electron-ia32
-  - npm test
   - if [ "$TRAVIS_TAG" ]; then npm run upload; fi

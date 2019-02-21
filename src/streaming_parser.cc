@@ -15,7 +15,7 @@ public:
     : Napi::AsyncWorker(callback), parser(parser), input(input) {}
 
   void Execute() {
-    cmark_parser_feed_reentrant(parser, input.c_str(), input.length());
+    cmark_parser_feed(parser, input.c_str(), input.length());
   }
 
   void OnOK() {

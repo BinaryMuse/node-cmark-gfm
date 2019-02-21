@@ -19,15 +19,20 @@ void populate_extension_names(Napi::Object options_obj, vector<string>* extensio
   Napi::Value name = Napi::String::New(env, "extensions");
   Napi::Value val = options_obj.Get(name);
   if (val.IsEmpty() || val.IsNull() || val.IsUndefined()) return;
-  if (!val.IsArray()) {
-    string err_msg = "The 'extensions' property should be an array of extension names";
+  if (!val.IsObject()) {
+    string err_msg = "The 'extensions' property should be an object";
     Napi::Error::New(env, err_msg.c_str()).ThrowAsJavaScriptException();
     return;
   }
 
-  Napi::Array exts = val.As<Napi::Array>();
-  for(uint32_t i = 0; i < exts.Length(); i++) {
-    Napi::Value ext_name = exts.Get(i);
+  Napi::Object exts = val.As<Napi::Object>();
+  Napi::Array exts_keys = exts.GetPropertyNames();
+  for(uint32_t i = 0; i < exts_keys.Length(); i++) {
+    Napi::Value ext_name = exts_keys.Get(i);
+    Napi::Value ext_enabled = exts.Get(ext_name).ToBoolean();
+    if (!ext_enabled) {
+      return;
+    }
     if (!ext_name.IsString()) {
       string bad_ext_name(ext_name.ToString());
       string err_msg = "'" + bad_ext_name + "' is not a valid extension name.";

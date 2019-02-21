@@ -88,7 +88,7 @@ fs.createReadStream('./input.md')
 
 ### Options
 
-cmark-gfm supports a variety of options that it passes to the underlying libcmark-gfm library. You can enable most options by setting its name to the value of `true` in your `options` object; to enable an extension, add its name to an `extensions` array. For example, to enable the `smart` and `footnotes` options and the `strikethrough` extension:
+cmark-gfm supports a variety of options that it passes to the underlying libcmark-gfm library. You can enable most options by setting its name to the value of `true` in your `options` object; to enable an extension, add its name as a key to an `extensions` object with a value of `true`. For example, to enable the `smart` and `footnotes` options and the `strikethrough` extension:
 
 ```javascript
 const cmark = require('cmark-gfm')
@@ -96,7 +96,9 @@ const cmark = require('cmark-gfm')
 const options = {
   smart: true,
   footnotes: true,
-  extensions: ['strikethrough']
+  extensions: {
+    strikethrough: true
+  }
 }
 
 cmark.renderHtml(markdown, options)
@@ -118,10 +120,10 @@ You can find a summary of all the options in the table below, as well as additio
 | `strikethroughDoubleTilde` | `bool` | When enabled, the `strikethrough` extension will only render text as strikethrough if it is surrounded by exactly `~~two tildes~~` |
 | `fullInfoString`* | `bool` | Adds additional code block info as an additional attribute on the resulting HTML element |
 | `unsafe`* | `bool` | Allows raw HTML and unsafe links (`javascript:`, `vbscript:`, `file:`, and `data:` except for `image/png`, `image/gif`, `image/jpeg`, or `image/webp` mime types). Otherwise, raw HTML is replaced by a placeholder HTML comment, and unsafe links are replaced with empty strings. |
-| `extensions`* | `array<string>` | A list of extensions to enable |
+| `extensions`* | `object` | Which extensions to enable |
 | *\* more information in the Features and Extensions sections below* |
 
-libcmark-gfm also exposes several Markdown extensions that you can enable by passing their name to the `extensions` option (which is an array of strings). You can find a summary of all the extensions in the table below, as well as additional information in the *Extensions* section later in this document.
+libcmark-gfm also exposes several Markdown extensions that you can enable by passing their name as keys to the `extensions` option (with a value of `true`). You can find a summary of all the extensions in the table below, as well as additional information in the *Extensions* section later in this document.
 
 | Name | Description |
 |---|---|

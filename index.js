@@ -48,9 +48,15 @@ module.exports = {
       options = {}
     }
 
+    if (markdown === null || markdown === undefined || typeof markdown !== 'string') {
+      throw new Error("Expected argument 'markdown' to be a string")
+    }
+
+    let buffer = ''
     const stream = new StreamingParser(options)
     const promise = new Promise((resolve, reject) => {
-      stream.once('data', data => resolve(data.toString()))
+      stream.on('data', data => buffer += data.toString())
+      stream.once('end', () => resolve(buffer))
       stream.once('error', reject)
     })
     stream.write(markdown)

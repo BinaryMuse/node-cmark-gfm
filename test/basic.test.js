@@ -37,9 +37,21 @@ describe('#renderHtml', () => {
     ticked = true
   })
 
-  it('handles odd values', async () => {
-    assert.equal(await cmark.renderHtml(''), '')
-    assert.equal(await cmark.renderHtml('   '), '')
+  it('handles odd values', (done) => {
+    let i = 0
+    const incDone = (err) => {
+      if (err) return done(err)
+      if (++i === 2) done()
+    }
+
     assert.throws(() => cmark.renderHtml(undefined))
+    cmark.renderHtml('', (err, html) => {
+      assert.equal(html, '')
+      incDone(err)
+    })
+    cmark.renderHtml('   ', (err, html) => {
+      assert.equal(html, '')
+      incDone(err)
+    })
   })
 })

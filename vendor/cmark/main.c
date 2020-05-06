@@ -3,7 +3,6 @@
 #include <string.h>
 #include <errno.h>
 #include "config.h"
-#include "memory.h"
 #include "cmark-gfm.h"
 #include "node.h"
 #include "cmark-gfm-extension_api.h"
@@ -12,6 +11,14 @@
 #include "registry.h"
 
 #include "../extensions/cmark-gfm-core-extensions.h"
+
+#if defined(__OpenBSD__)
+#  include <sys/param.h>
+#  if OpenBSD >= 201605
+#    define USE_PLEDGE
+#    include <unistd.h>
+#  endif
+#endif
 
 #if defined(__OpenBSD__)
 #  include <sys/param.h>
@@ -45,7 +52,7 @@ void print_usage() {
   printf("  --sourcepos       Include source position attribute\n");
   printf("  --hardbreaks      Treat newlines as hard line breaks\n");
   printf("  --nobreaks        Render soft line breaks as spaces\n");
-  printf("  --unsafe          Allow raw HTML and dangerous URLs\n");
+  printf("  --unsafe          Render raw HTML and dangerous URLs\n");
   printf("  --smart           Use smart punctuation\n");
   printf("  --validate-utf8   Replace UTF-8 invalid sequences with U+FFFD\n");
   printf("  --github-pre-lang Use GitHub-style <pre lang> for code blocks\n");
@@ -133,6 +140,13 @@ int main(int argc, char *argv[]) {
 #endif
 
   cmark_gfm_core_extensions_ensure_registered();
+
+#ifdef USE_PLEDGE
+  if (pledge("stdio rpath", NULL) != 0) {
+    perror("pledge");
+    return 1;
+  }
+#endif
 
 #if defined(_WIN32) && !defined(__CYGWIN__)
   _setmode(_fileno(stdin), _O_BINARY);

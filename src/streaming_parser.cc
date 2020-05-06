@@ -61,7 +61,7 @@ Napi::Object StreamingParser::Init(Napi::Env env, Napi::Object exports) {
   Napi::Function func = DefineClass(env, "StreamingParser", {
     InstanceMethod("isFinished", &StreamingParser::IsFinished),
     InstanceMethod("write", &StreamingParser::Write),
-    InstanceMethod("finalize", &StreamingParser::Finalize),
+    InstanceMethod("finalize", &StreamingParser::FinalizeMethod),
     InstanceMethod("destroy", &StreamingParser::Destroy)
   });
 
@@ -106,7 +106,7 @@ Napi::Value StreamingParser::Write(const Napi::CallbackInfo& info) {
   return info.Env().Undefined();
 }
 
-Napi::Value StreamingParser::Finalize(const Napi::CallbackInfo& info) {
+Napi::Value StreamingParser::FinalizeMethod(const Napi::CallbackInfo& info) {
   this->finished = true;
   Napi::Function callback = info[0].As<Napi::Function>();
 

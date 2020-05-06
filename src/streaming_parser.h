@@ -8,7 +8,7 @@ class StreamingParser : public Napi::ObjectWrap<StreamingParser> {
   ~StreamingParser();
   Napi::Value IsFinished(const Napi::CallbackInfo& info);
   Napi::Value Write(const Napi::CallbackInfo& info);
-  Napi::Value Finalize(const Napi::CallbackInfo& info);
+  Napi::Value FinalizeMethod(const Napi::CallbackInfo& info);
   Napi::Value Destroy(const Napi::CallbackInfo& info);
 
  private:

@@ -101,8 +101,8 @@ describe('extensions', () => {
 
       const html = `
       <ul>
-        <li class="task-list-item"><input type="checkbox" disabled="" /> Task 1</li>
-        <li class="task-list-item"><input type="checkbox" checked="" disabled="" /> Task 2</li>
+        <li><input type="checkbox" disabled="" /> Task 1</li>
+        <li><input type="checkbox" checked="" disabled="" /> Task 2</li>
       </ul>
       `
 

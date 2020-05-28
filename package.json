@@ -6,7 +6,10 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "node-gyp rebuild",
+    "build": "node-gyp build",
+    "build:dev": "node-gyp build --debug",
+    "rebuild": "node-gyp rebuild",
+    "rebuild:dev": "node-gyp rebuild --debug",
     "test": "mocha lib/test/helper.js lib/test/*.test.js && npm run tsd",
     "tsd": "tsd",
     "update-vendor": "./script/update-vendor"

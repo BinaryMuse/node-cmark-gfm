@@ -79,13 +79,13 @@
         ['OS=="win"', {
           'link_settings': {
             'libraries': [
-              '<(module_root_dir)/build/Release/libcmark-gfm.lib'
+              '<(PRODUCT_DIR)/libcmark-gfm.lib'
             ]
           }
         }, {
           'link_settings': {
             'libraries': [
-              '<(module_root_dir)/build/Release/cmark-gfm.a'
+              '<(PRODUCT_DIR)/cmark-gfm.a'
             ]
           }
         }]

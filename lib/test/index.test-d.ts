@@ -1,13 +1,13 @@
 import { expectType } from "tsd";
 import * as cmark from "..";
 
-expectType<string>(cmark.cmarkVersion());
+expectType<string>(cmark.cmark_version());
 expectType<void>(cmark.renderHtml("<h1>Acme String</h1>", (err, html) => {}));
 expectType<Promise<string>>(cmark.renderHtml("<h1>Acme String</h1>") as Promise<string>);
 expectType<string>(await cmark.renderHtml("<h1>Acme String</h1>"));
 expectType<string>(cmark.renderHtmlSync("<h1>Acme String</h1>"));
 
-await cmark.cmarkVersion();
+await cmark.cmark_version();
 await cmark.createStreamingParser();
 await cmark.renderHtml("<h1>Acme String</h1>", {
   extensions: {

@@ -43,7 +43,7 @@ declare namespace cmark {
 
   function createStreamingParser(options?: Partial<cmark.IOptions>): any;
 
-  function cmarkVersion(): string;
+  function cmark_version(): string;
 }
 
 export = cmark;

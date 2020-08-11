@@ -6,13 +6,16 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "install": "prebuild-install || node-gyp rebuild",
     "build": "node-gyp build",
     "build:dev": "node-gyp build --debug",
     "rebuild": "node-gyp rebuild",
     "rebuild:dev": "node-gyp rebuild --debug",
+    "prebuild:napi": "prebuild -t 3 -r napi",
     "test": "mocha lib/test/helper.js lib/test/*.test.js && npm run tsd",
     "tsd": "tsd",
-    "update-vendor": "./script/update-vendor"
+    "update-vendor": "./script/update-vendor",
+    "upload": "node ./script/upload.js"
   },
   "keywords": [
     "markdown",
@@ -29,9 +32,16 @@
   "tsd": {
     "directory": "lib/test"
   },
+  "binary": {
+    "napi_versions": [
+      2,
+      3
+    ]
+  },
   "dependencies": {
     "bindings": "^1.5.0",
-    "node-addon-api": "^3.0.0"
+    "node-addon-api": "^3.0.0",
+    "prebuild-install": "^5.3.5"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -39,6 +49,7 @@
     "dedent": "^0.7.0",
     "mocha": "^8.0.1",
     "node-gyp": "^7.0.0",
+    "prebuild": "^10.0.0",
     "tsd": "^0.13.1",
     "typescript": "^4.0.2"
   }

@@ -85,12 +85,7 @@ StreamingParser::StreamingParser(const Napi::CallbackInfo& info) :
   this->parser = prepare_parser(this->options, &extension_names);
 }
 
-StreamingParser::~StreamingParser() {
-  if (this->parser) {
-    cmark_parser_free(this->parser);
-    this->parser = nullptr;
-  }
-}
+StreamingParser::~StreamingParser() {}
 
 Napi::Value StreamingParser::IsFinished(const Napi::CallbackInfo& info) {
   return Napi::Boolean::New(info.Env(), this->finished);
@@ -117,7 +112,11 @@ Napi::Value StreamingParser::FinalizeMethod(const Napi::CallbackInfo& info) {
 }
 
 Napi::Value StreamingParser::Destroy(const Napi::CallbackInfo& info) {
-  this->~StreamingParser();
+  if (this->parser) {
+    cmark_parser_free(this->parser);
+    this->parser = nullptr;
+  }
+
   info[0].As<Napi::Function>().Call({ info.Env().Null() });
 
   return info.Env().Undefined();

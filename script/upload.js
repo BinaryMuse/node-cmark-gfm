@@ -10,6 +10,6 @@ spawnSync(
     '../node_modules/.bin/prebuild' +
       (process.platform === 'win32' ? '.cmd' : '')
   ),
-  ['--upload-all', process.env.GH_TOKEN],
+  ['--upload-all', process.env.GITHUB_TOKEN],
   { stdio: 'inherit' }
 )

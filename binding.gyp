@@ -53,7 +53,6 @@
     {
       'target_name': 'binding',
       'defines': [
-        'NAPI_VERSION=<(napi_build_version)',
         'NAPI_DISABLE_CPP_EXCEPTIONS',
         'CMARK_GFM_STATIC_DEFINE',
         'CMARK_GFM_EXTENSIONS_STATIC_DEFINE'

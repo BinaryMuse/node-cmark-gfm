@@ -11,6 +11,8 @@
     "build:dev": "node-gyp build --debug",
     "rebuild": "node-gyp rebuild",
     "rebuild:dev": "node-gyp rebuild --debug",
+    "prebuild:all": "yarn prebuild:napi && yarn prebuild:node",
+    "prebuild:node": "prebuild -t 10.0.0 -t 12.0.0 -t 14.0.0 -r node",
     "prebuild:napi": "prebuild -t 3 -r napi",
     "test": "mocha lib/test/helper.js lib/test/*.test.js && npm run tsd",
     "tsd": "tsd",

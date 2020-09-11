@@ -20,6 +20,6 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Prebuild binaries
-        run: yarn prebuild:all
+        run: yarn prebuild:napi
       - name: Upload binaries
         run: yarn upload

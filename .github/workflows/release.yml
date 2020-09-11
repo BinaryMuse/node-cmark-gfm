@@ -23,3 +23,5 @@ jobs:
         run: yarn prebuild:napi
       - name: Upload binaries
         run: yarn upload
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

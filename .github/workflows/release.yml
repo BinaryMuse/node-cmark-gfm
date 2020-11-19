@@ -3,6 +3,7 @@ name: Upload Prebuild Binaries
 on:
   release:
     types: [created]
+  workflow_dispatch: {}
 
 jobs:
   build:

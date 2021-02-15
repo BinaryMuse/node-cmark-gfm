@@ -2175,9 +2175,9 @@ plur@^4.0.0:
     irregular-plurals "^3.2.0"
 
 prebuild-install@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-6.0.0.tgz#669022bcde57c710a869e39c5ca6bf9cd207f316"
-  integrity sha512-h2ZJ1PXHKWZpp1caLw0oX9sagVpL2YTk+ZwInQbQ3QqNd4J03O6MpFNmMTJlkfgPENWqe5kP0WjQLqz5OjLfsw==
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-6.0.1.tgz#5902172f7a40eb67305b96c2a695db32636ee26d"
+  integrity sha512-7GOJrLuow8yeiyv75rmvZyeMGzl8mdEX5gY69d6a6bHWmiPevwqFw+tQavhK0EYMaSg3/KD24cWqeQv1EWsqDQ==
   dependencies:
     detect-libc "^1.0.3"
     expand-template "^2.0.3"

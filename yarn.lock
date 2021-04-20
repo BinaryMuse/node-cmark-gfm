@@ -490,13 +490,13 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chai-html@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/chai-html/-/chai-html-1.3.0.tgz#1a2fda74eb26c8b807f792d01f439ceec156cdeb"
-  integrity sha512-AKnYAqIwReKPQFpMGzuqslnIbnGbiWm94CbYda5oVEfNLau8rLWyMhMwd1AFpaWoXpa4qMHHFQeSU4oGCgdvuw==
+chai-html@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/chai-html/-/chai-html-2.0.1.tgz#a3a5108b6886458c3982f1e4c48547df5367c3f7"
+  integrity sha512-I5IVp4yw1SzkqzAyvJh0p/qiyodZ2la6bx+X/ofIokoKqwv74Bkw/F5vg33f8GH49G5wrMvBqZxl6bnXCPVLvw==
   dependencies:
     deep-diff "^1.0.0"
-    parse5 "^5.1.0"
+    parse5 "^6.0.0"
 
 chai@^4.2.0:
   version "4.3.4"
@@ -2322,10 +2322,10 @@ parse-json@^5.0.0:
     json-parse-better-errors "^1.0.1"
     lines-and-columns "^1.1.6"
 
-parse5@^5.1.0:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
-  integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
+parse5@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
+  integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
 
 path-array@^1.0.0:
   version "1.0.1"

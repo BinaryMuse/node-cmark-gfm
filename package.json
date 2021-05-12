@@ -14,8 +14,7 @@
     "prebuild:all": "yarn prebuild:node && yarn prebuild:electron",
     "prebuild:node": "prebuild -t 12.0.0 -t 14.0.0 -t 15.0.0 -t 16.0.0 -r node",
     "prebuild:electron": "prebuild -t 10.0.0 -t 11.0.0 -t 12.0.0 -r electron",
-    "test": "mocha lib/test/helper.js lib/test/*.test.js && npm run tsd",
-    "tsd": "tsd",
+    "test": "mocha lib/test/helper.js lib/test/*.test.js && yarn tsd",
     "update-vendor": "./script/update-vendor",
     "upload": "node ./script/upload.js"
   },

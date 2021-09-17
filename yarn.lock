@@ -1822,12 +1822,19 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-node-abi@^2.2.0, node-abi@^2.21.0:
+node-abi@^2.21.0:
   version "2.26.0"
   resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.26.0.tgz#355d5d4bc603e856f74197adbf3f5117a396ba40"
   integrity sha512-ag/Vos/mXXpWLLAYWsAoQdgS+gW7IwvgMLOgqopm/DbzAjazLltzgzpVMsFlgmo9TzG5hGXeaBZx2AI731RIsQ==
   dependencies:
     semver "^5.4.1"
+
+node-abi@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.0.0.tgz#aaeec41ffa8dd436de7a97345ff6f5c99eeafeec"
+  integrity sha512-bAfE5Pp+qqHiz4GkpH64HqHUgK2DippKB3QuYbsOp8QoR8c7S646jJMfsOj+WHZO5dPssO3j+54LwG3w3HeYWg==
+  dependencies:
+    semver "^7.3.5"
 
 node-addon-api@^4.0.0:
   version "4.1.0"
@@ -2172,10 +2179,10 @@ prebuild-install@^6.0.0:
     tar-fs "^2.0.0"
     tunnel-agent "^0.6.0"
 
-prebuild@^10.0.0:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/prebuild/-/prebuild-10.0.1.tgz#9d46a00f42b60ad1718479cc5e3d1ef4882b7f33"
-  integrity sha512-x0CkKDmHFwX49rTGEYJwB9jBQwJWxRzwUtP5PA9dP8khFGMm3oSFgYortxdlp0PkxB29EhWGp/KQE5g+adehYg==
+prebuild@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/prebuild/-/prebuild-11.0.0.tgz#956c22ed4ebd36928b0267df595af76ee1d8df4a"
+  integrity sha512-Vmr240YZZXTXOHFMvGrNaPN/PYFZSxKwiJNSxpwvW215B0mkhwHccVQHtklK4pXeXS80gYGpe5mt72zhKjBPQg==
   dependencies:
     cmake-js "~5.2.0"
     detect-libc "^1.0.3"
@@ -2187,7 +2194,7 @@ prebuild@^10.0.0:
     minimist "^1.1.2"
     mkdirp "^0.5.1"
     napi-build-utils "^1.0.1"
-    node-abi "^2.2.0"
+    node-abi "^3.0.0"
     node-gyp "^6.0.1"
     node-ninja "^1.0.1"
     noop-logger "^0.1.0"
